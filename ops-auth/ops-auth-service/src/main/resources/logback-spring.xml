@@ -94,10 +94,10 @@
 		</filter>
 	</appender>
 	<root level="debug">
-		<appender-ref ref="ALLFILE" />
 		<appender-ref ref="CONSOLE" />
+<!-- 		<appender-ref ref="ALLFILE" />
 		<appender-ref ref="ERRORFILE" />
-		<appender-ref ref="WARNFILE" />
+		<appender-ref ref="WARNFILE" /> -->
 	</root>
 
 	<jmxConfigurator/>

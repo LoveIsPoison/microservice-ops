@@ -92,9 +92,9 @@
 	</appender> 
 	
 	<root level="info">
-		<appender-ref ref="ALLFILE" />
-		<appender-ref ref="CONSOLE" />
-		<appender-ref ref="ERRORFILE" />
+		 <appender-ref ref="CONSOLE" /> 
+<!-- 		<appender-ref ref="ALLFILE" />
+		<appender-ref ref="ERRORFILE" /> -->
 	</root>
 
 	<jmxConfigurator/>
