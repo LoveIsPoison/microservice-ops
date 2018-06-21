@@ -33,11 +33,12 @@
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
 			<!-- 文件名称 -->
+			<!-- <fileNamePattern>${FILE_PATH}/logs.%d{yyyy-MM-dd}-%i.log -->
 			<fileNamePattern>${FILE_PATH}/logs.%d{yyyy-MM-dd}-%i.log
 			</fileNamePattern>
-			<maxFileSize>10MB</maxFileSize>
-			<maxHistory>100</maxHistory>
-			<totalSizeCap>20GB</totalSizeCap>
+			<maxFileSize>4MB</maxFileSize>
+			<maxHistory>2</maxHistory>
+			<totalSizeCap>20MB</totalSizeCap>
 		</rollingPolicy>
 		<layout class="ch.qos.logback.classic.PatternLayout">
 			<pattern>${PATTERN}</pattern>
@@ -93,6 +94,7 @@
 	
 	<root level="info">
 		 <appender-ref ref="CONSOLE" /> 
+		 <appender-ref ref="ALLFILE" />
 <!-- 		<appender-ref ref="ALLFILE" />
 		<appender-ref ref="ERRORFILE" /> -->
 	</root>
