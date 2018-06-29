@@ -222,7 +222,7 @@ public class AdminAccessFilter extends ZuulFilter {
             return null;
         } catch (Exception e) {
         	//如果jwt中的用户信息获取失败，这块返回信息可能要改成统一的response格式
-            setFailedRequest(JSON.toJSONString(new TokenErrorResponse(e.getMessage())),200);
+            setFailedRequest(JSON.toJSONString(new TokenKickOutResponse("Please login again")),200);
         	logger.error("--解析jwt出现异常,"+e.getMessage());
             return null;
         }
