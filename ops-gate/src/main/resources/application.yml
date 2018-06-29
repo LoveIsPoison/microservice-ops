@@ -25,9 +25,9 @@ spring:
         
     datasource:
        driverClassName: com.mysql.jdbc.Driver
-       url: ${db.yc_base.url:jdbc:mysql://10.180.8.205:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+       url: ${db.yc_base.url:jdbc:mysql://dce.carapptest.gtmc.com.cn:30143/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
        username: ${db.yc_base.username:root}
-       password: ${db.yc_base.pwd:rcs}
+       password: ${db.yc_base.pwd:123456}
     http:
       multipart:
         max-file-size: 10Mb
@@ -95,9 +95,9 @@ zuul:
 
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.205:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    url: ${db.yc_base.url:jdbc:mysql://dce.carapptest.gtmc.com.cn:30143/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
     username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:rcs}
+    password: ${db.yc_base.pwd:123456}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.cloud.zuul.db.mapper
@@ -153,9 +153,9 @@ groovy:
     interval: ${groovy.interval:60}
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.205:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    url: ${db.yc_base.url:jdbc:mysql://dce.carapptest.gtmc.com.cn:30143/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
     username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:rcs}
+    password: ${db.yc_base.pwd:123456}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.microservice.filter.mapper
