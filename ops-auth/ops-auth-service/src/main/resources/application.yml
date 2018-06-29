@@ -82,7 +82,7 @@ eureka:
 
 jwt:
   token-header: Authorization
-  expire: ${jwt.yc_base.expire:600}
+  expire: ${jwt.yc_base.expire:120}
   pri-key:
     path: jwt/pri.key
   pub-key:
