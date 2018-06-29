@@ -25,10 +25,10 @@ import com.google.common.collect.Collections2;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import com.yonyou.cloud.common.jwt.IJwtInfo;
-import com.yonyou.cloud.common.jwt.JwtInfo;
 import com.yonyou.cloud.common.service.utils.ClientUtil;
 import com.yonyou.microservice.auth.client.config.ServiceAuthConfig;
 import com.yonyou.microservice.auth.client.config.UserAuthConfig;
+import com.yonyou.microservice.auth.client.exception.JwtTokenExpiredException;
 import com.yonyou.microservice.auth.client.jwt.ServiceAuthUtil;
 import com.yonyou.microservice.gate.common.context.BaseContextHandler;
 import com.yonyou.microservice.gate.common.msg.TokenErrorResponse;
@@ -38,6 +38,7 @@ import com.yonyou.microservice.gate.common.vo.authority.IgnoreUriInfo;
 import com.yonyou.microservice.gate.common.vo.authority.PermissionInfo;
 import com.yonyou.microservice.gate.common.vo.log.LogInfo;
 import com.yonyou.microservice.gate.common.vo.user.UserInfo;
+import com.yonyou.microservice.gate.server.exception.UserTokenExpiredResponse;
 import com.yonyou.microservice.gate.server.feign.IAuthService;
 import com.yonyou.microservice.gate.server.feign.IIgnoreUriService;
 import com.yonyou.microservice.gate.server.feign.ILogService;
@@ -214,10 +215,15 @@ public class AdminAccessFilter extends ZuulFilter {
             	logger.info("--user为空，退出网关");
                 return null;
             }
+        } catch (JwtTokenExpiredException e) {
+        	//如果jwt中的用户信息获取失败，这块返回信息可能要改成统一的response格式
+            setFailedRequest(JSON.toJSONString(new UserTokenExpiredResponse(e.getMessage())),200);
+        	logger.error("--User token expired,"+e.getMessage());
+            return null;
         } catch (Exception e) {
         	//如果jwt中的用户信息获取失败，这块返回信息可能要改成统一的response格式
             setFailedRequest(JSON.toJSONString(new TokenErrorResponse(e.getMessage())),200);
-        	logger.error("--AdminAccessFilter.run(),解析jwt出现异常,"+e.getMessage());
+        	logger.error("--解析jwt出现异常,"+e.getMessage());
             return null;
         }
         addHeader(ctx, user);
