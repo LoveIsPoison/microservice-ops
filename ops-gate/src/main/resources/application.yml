@@ -173,4 +173,4 @@ redis:
   numTestsPerEvictionRun: ${redis.yc_base.numTestsPerEvictionRun:1024}  
   timeBetweenEvictionRunsMillis: ${redis.yc_base.timeBetweenEvictionRunsMillis:30000}  
   testOnBorrow: ${redis.yc_base.testOnBorrow:true}  
-  expire: 2592000
+  expire: 600 #2592000

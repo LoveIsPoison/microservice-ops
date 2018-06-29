@@ -73,6 +73,10 @@ public class CacheService {
             		//当前jwt与有效jwt是否匹配
             		boolean r=authToken.equals(jwt);
             		boolean kickOut=((IJwtInfo)jwtInfo).getKickout();
+            		logger.info("--curjwt="+authToken);
+            		logger.info("--redis jwt="+jwt);
+            		logger.info("--curjwt == redis jwt="+r);
+            		logger.info("--kickOut="+kickOut);
             		//当前jwt与有效jwt匹配，或者不互踢
             		if(r||!kickOut){
             			//设置jwt有效期
