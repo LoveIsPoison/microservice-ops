@@ -112,11 +112,18 @@
 			<url>http://210.13.111.26:10160/nexus/content/repositories/snapshots/</url>
 		</snapshotRepository> -->
 		
-		<snapshotRepository>
+		<!-- <snapshotRepository>
 	        <id>nexus-snapshots</id>
 	        <name>user snapshot</name>
 	        <url>http://dce.carapptest.gtmc.com.cn:32081/repository/maven-snapshots/</url>
+	    </snapshotRepository> -->
+	    
+	    <snapshotRepository>
+	        <id>nexus-snapshots</id>
+	        <name>user snapshot</name>
+	        <url>http://10.180.8.200:32000/repository/maven-snapshots/</url>
 	    </snapshotRepository>
+	    
 	</distributionManagement>
     <build>
         <plugins>
