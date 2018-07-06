@@ -33,7 +33,7 @@
 
 		<!-- 相关依赖的版本 -->
 		<!-- 二方库 -->
-		<commonElegance.verison>0.0.2-SNAPSHOT</commonElegance.verison>
+		<commonElegance.verison>0.0.3-SNAPSHOT</commonElegance.verison>
 		<mom.version>0.0.1-SNAPSHOT</mom.version>
 		<!-- 三方库 -->
 		<mapper.version>3.4.2</mapper.version>
