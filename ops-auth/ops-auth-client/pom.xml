@@ -39,27 +39,21 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>common-elegance</artifactId>
+			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 	
-	<version>0.0.3-SNAPSHOT</version>
+	
 		<distributionManagement>
-<!-- 		<repository>
+		<repository>
 			<id>nexus-releases</id>
 			<name>Releases name</name>
-			<url>http://210.13.111.26:10160/nexus/content/repositories/releases/</url>
-		</repository>-->
+			<url>http://10.180.8.200:32000/repository/maven-releases/</url>
+		</repository>
 		<snapshotRepository>
 			<id>nexus-snapshots</id>
 			<name>snapshots name</name>
 			<url>http://10.180.8.200:32000/repository/maven-snapshots/</url>
-		</snapshotRepository> 
-		
-		<!--  <snapshotRepository>
-	        <id>nexus-snapshots</id>
-	        <name>user snapshot</name>
-	        <url>http://dce.carapptest.gtmc.com.cn:32081/repository/maven-snapshots/</url>
-	    </snapshotRepository> -->
-	    
+		</snapshotRepository>
 	</distributionManagement>
 </project>
