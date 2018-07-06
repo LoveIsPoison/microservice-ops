@@ -56,6 +56,7 @@ public class DynAuthServiceHttpImpl implements DynAuthService {
 		logger.info("--authCode = {}",authCode);
 		logger.info("--request body = {}",body);
 
+		long st=System.currentTimeMillis();
 		// 组装 http 请求
 		// 1.charset
 		if (restTemplate == null) {
@@ -75,8 +76,10 @@ public class DynAuthServiceHttpImpl implements DynAuthService {
 		// 5.exchage
 		ResponseEntity<String> rr = restTemplate.exchange(pInfo.getAuthService() + param, hm, entity, String.class);
 		String repBody = rr.getBody();
+		long et=System.currentTimeMillis();
+		long time=st-et;
 		// 6.处理认证结果
-		logger.info("--restTemplate,response=" + repBody);
+		logger.info("--restTemplate,spend time(ms)="+time+",response=" + repBody);
 		DynAuthHttpResultHanderFactory httpResultHandlerFactory = DynAuthHttpResultHanderFactory.getInstance();
 		DynAuthHttpResultHandler httpResultHandler = httpResultHandlerFactory.createHandler(pInfo);
 		return httpResultHandler.handlerHttpResult(repBody, authCode);
