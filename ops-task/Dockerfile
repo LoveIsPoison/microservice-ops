@@ -6,5 +6,7 @@ WORKDIR /usr/src/myapp/
 
 EXPOSE 9009
 
-ENTRYPOINT java -jar ops-task.jar
+ENV JAVA_OPTS ""
+
+ENTRYPOINT java $JAVA_OPTS -jar ops-task.jar
 
