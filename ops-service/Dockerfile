@@ -6,4 +6,6 @@ WORKDIR /usr/src/myapp/
 
 EXPOSE 9004
 
-ENTRYPOINT java -jar ops-service.jar
+ENV JAVA_OPTS ""
+
+ENTRYPOINT java $JAVA_OPTS -jar ops-service.jar
