@@ -1,6 +1,6 @@
 FROM 10.180.4.226/yonyou-dev/jdk:1.8
 
-COPY ops-task/target/ops-task.jar /ops-task.jar
+COPY ./target/ops-task.jar /ops-task.jar
 
 WORKDIR /
 
