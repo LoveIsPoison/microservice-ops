@@ -1,4 +1,4 @@
-FROM 10.180.4.226/k8sth/jdk:v1
+FROM 10.180.4.226/k8sth/jdk:v3
 
 COPY ./target/ops-task.jar /ops-task.jar
 
