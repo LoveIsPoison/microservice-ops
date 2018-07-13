@@ -1,4 +1,4 @@
-FROM 10.180.4.226/yonyou-dev/jdk-skagent:0.4
+FROM 10.180.4.226/yonyou-dev/jdk-skagent:0.3
 
 COPY ./target/ops-task.jar /ops-task.jar
 
