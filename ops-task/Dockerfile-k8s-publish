@@ -1,4 +1,4 @@
-FROM 10.180.4.226/yonyou-dev/jdk:1.8
+FROM 10.180.4.226/k8sth/jdk:v1
 
 COPY ./target/ops-task.jar /ops-task.jar
 
@@ -6,4 +6,4 @@ WORKDIR /
 
 EXPOSE 9009
 
-ENTRYPOINT java -jar ops-task.jar
+ENTRYPOINT java -javaagent:/agent/skywalking-agent.jar -jar ops-task.jar
