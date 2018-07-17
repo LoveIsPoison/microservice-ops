@@ -2,7 +2,7 @@ FROM 10.180.4.226/yonyou-dev/jdk-skagent:0.3
 
 RUN mkdir -p /usr/src/myapp
 
-COPY ops-admin.jar /usr/src/myapp/ops-admin.jar
+COPY ./target/ops-admin.jar /usr/src/myapp/ops-admin.jar
 
 WORKDIR /usr/src/myapp/
 

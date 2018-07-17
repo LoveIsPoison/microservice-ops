@@ -25,15 +25,15 @@ spring:
         
     datasource:
        driverClassName: com.mysql.jdbc.Driver
-       url: ${db.yc_base.url:jdbc:mysql://dce.carapptest.gtmc.com.cn:30143/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+       url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
        username: ${db.yc_base.username:root}
-       password: ${db.yc_base.pwd:123456}
+       password: ${db.yc_base.pwd:password}
     http:
       multipart:
         max-file-size: 10Mb
         max-request-size: 10Mb
 server:
-    port: ${ops.gate.port:8766} #启动端口
+    port: ${ops.gate.port:9003} #启动端口
 
 ajpport: 9101
 jvmroute: ""
@@ -95,9 +95,9 @@ zuul:
 
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://dce.carapptest.gtmc.com.cn:30143/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
     username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:123456}
+    password: ${db.yc_base.pwd:password}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.cloud.zuul.db.mapper
@@ -153,17 +153,17 @@ groovy:
     interval: ${groovy.interval:60}
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://dce.carapptest.gtmc.com.cn:30143/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
     username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:123456}
+    password: ${db.yc_base.pwd:password}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.microservice.filter.mapper
     xmlLocation: classpath:mapper/**/*.xml
 redis:
-  hostName: ${redis.yc_base.ip:10.180.4.221}
-  port: ${redis.yc_base.port:6379}
-  password: ${redis.yc_base.password:Pass1234}
+  hostName: ${redis.yc_base.ip:10.180.8.200}
+  port: ${redis.yc_base.port:32044}
+  password: ${redis.yc_base.password:}
   timeout: ${redis.yc_base.timeout:10000}
   testWhileIdle: true 
   maxIdle: ${redis.yc_base.maxIdle:300}  

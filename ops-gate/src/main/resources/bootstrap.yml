@@ -18,7 +18,7 @@ eureka:
 #        ip-address: 127.0.0.1
     client:
         serviceUrl:
-            defaultZone: ${eureka.url:http://dce.carapptest.gtmc.com.cn:31432/eureka/}
+            defaultZone: ${eureka.url:http://10.180.8.200:32432/eureka/}
                     # docker 部署开启
 #            defaultZone: http://center:8761/eureka/
 
