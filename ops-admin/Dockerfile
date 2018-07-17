@@ -1,10 +1,11 @@
-FROM 172.16.199.203/daocloud/java:latest
+FROM 10.180.4.226/yonyou-dev/jdk-skagent:0.3
 
-COPY target/ops-admin.jar /usr/src/myapp/ops-admin.jar
+RUN mkdir -p /usr/src/myapp
+
+COPY ops-admin.jar /usr/src/myapp/ops-admin.jar
 
 WORKDIR /usr/src/myapp/
 
 EXPOSE 9002
 
-ENTRYPOINT java -jar ops-admin.jar
-
+ENTRYPOINT java -javaagent:/agent/skywalking-agent.jar  -jar ops-admin.jar
