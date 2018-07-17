@@ -33,8 +33,8 @@ public class ElementController extends BaseController<ElementBiz, Element> {
 
   @RequestMapping(value = "/list", method = RequestMethod.GET)
   @ResponseBody
-  public PageResultResponse<Element> page(@RequestParam(defaultValue = "10",name ="limit") int limit,
-      @RequestParam(defaultValue = "1",name ="offset" ) int offset,String name, @RequestParam(defaultValue = "0",name = "menuId") int menuId) {
+  public PageResultResponse<Element> page(@RequestParam(defaultValue = "10") int limit,
+      @RequestParam(defaultValue = "1") int offset,String name, @RequestParam(defaultValue = "0") int menuId) {
     Example example = new Example(Element.class);
     Example.Criteria criteria = example.createCriteria();
     criteria.andEqualTo("menuId", menuId);
