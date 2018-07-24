@@ -32,7 +32,7 @@ import tk.mybatis.mapper.entity.Example;
 @RequestMapping("menu")
 public class MenuController extends BaseController<MenuBiz, Menu> {
     @Autowired
-    private UserBiz userBiz;
+    private UserBiz userBiz; 
 
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
