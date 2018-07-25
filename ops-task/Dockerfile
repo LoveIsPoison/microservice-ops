@@ -1,10 +1,19 @@
-FROM 172.16.199.203/daocloud/java:latest
+FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:1.8.14
 
-COPY target/ops-task.jar /usr/src/myapp/ops-task.jar
+MAINTAINER qianjs163@163.com
 
-WORKDIR /usr/src/myapp/
+#RUN mkdir -p /
+
+COPY ./target/ops-task.jar /ops-task.jar
+
+COPY env.sh /agent/env.sh
+
+RUN chmod -R 777 /agent
+
+WORKDIR /
 
 EXPOSE 9009
 
-ENTRYPOINT java -jar ops-task.jar
+CMD /agent/env.sh run
+
 
