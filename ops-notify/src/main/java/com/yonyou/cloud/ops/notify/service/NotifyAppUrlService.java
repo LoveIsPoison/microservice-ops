@@ -31,7 +31,11 @@ public class NotifyAppUrlService  extends BaseService<Mapper<NotifyAppUrl>, Noti
 			na.setContentType(list.get(0).getContentType());
 			na.setUrl(url);
 		}else{
-			if(list.size()==0){
+			if(url!=null){
+				na.setUrl(url);
+				na.setContentType("application/json");
+				return na;
+			}else	if(list.size()==0){
 				logger.error("error:app has no callbak url,appid="+appId);
 			}else{
 				logger.error("error:app callbak url size>1,size="+list.size()+",appId="+appId);
