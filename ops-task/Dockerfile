@@ -1,4 +1,4 @@
-FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:beta1
+FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:1.8.14
 
 MAINTAINER qianjs163@163.com
 
