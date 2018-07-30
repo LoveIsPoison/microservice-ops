@@ -98,6 +98,12 @@
 	        <artifactId>common-elegance</artifactId>
 	        <version>0.0.3-SNAPSHOT</version>
         </dependency>
+        
+        <dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>21.0</version>
+		</dependency>
     </dependencies>
     
     <distributionManagement>
@@ -121,7 +127,7 @@
 	    <snapshotRepository>
 	        <id>nexus-snapshots</id>
 	        <name>user snapshot</name>
-	        <url>http://10.180.8.200:32000/repository/maven-snapshots/</url>
+	        <url>http://10.180.8.208:32000/repository/maven-snapshots/</url>
 	    </snapshotRepository>
 	    
 	</distributionManagement>
