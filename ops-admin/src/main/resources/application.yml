@@ -12,9 +12,9 @@ spring:
     datasource:
         name: test
 #        :jdbc:mysql://10.180.8.205:3306/ag_admin?useUnicode=true&characterEncoding=UTF8
-        url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/ag_admin?useUnicode=true&characterEncoding=UTF8}
-        username: ${db.yc_base.username:root}
-        password: ${db.yc_base.pwd:password}
+        url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/ag_admin?useUnicode=true&characterEncoding=UTF8}
+        username: ${db.yc_base.username:test}
+        password: ${db.yc_base.pwd:Pass1q2w}
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
         driver-class-name: com.mysql.jdbc.Driver

@@ -1,0 +1,2 @@
+1.路由，即Path 要以 / 开头
+2.新版本的服务名称约定为service-version，service为原有的服务名称
