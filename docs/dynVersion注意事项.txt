@@ -1,2 +1,3 @@
-1.路由，即Path 要以 / 开头
+1.网关路由，即gate_routes的Path字段值 要以 / 开头
 2.新版本的服务名称约定为service-version，service为原有的服务名称
+3.gate_ignore_uri这张表，如果需要动态版本的服务有忽略权限的uri，那么这张表的service_id字段要填写

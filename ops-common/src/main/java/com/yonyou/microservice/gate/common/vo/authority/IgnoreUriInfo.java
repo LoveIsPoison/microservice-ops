@@ -10,6 +10,8 @@ public class IgnoreUriInfo {
 	private int id;
     
 	private String uri;
+	
+	private String serviceId;
 
 	public int getId() {
 		return id;
@@ -25,6 +27,14 @@ public class IgnoreUriInfo {
 
 	public void setUri(String uri) {
 		this.uri = uri;
+	}
+
+	public String getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
 	}
 
 
