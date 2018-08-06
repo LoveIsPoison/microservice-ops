@@ -43,6 +43,7 @@ import com.yonyou.microservice.gate.server.feign.IAuthService;
 import com.yonyou.microservice.gate.server.feign.IIgnoreUriService;
 import com.yonyou.microservice.gate.server.feign.ILogService;
 import com.yonyou.microservice.gate.server.service.CacheService;
+import com.yonyou.microservice.gate.server.service.UrlStatisticService;
 import com.yonyou.microservice.gate.server.utils.DbLog;
 
 import lombok.extern.slf4j.Slf4j;
@@ -99,6 +100,8 @@ public class AdminAccessFilter extends ZuulFilter {
     CacheService cacheService;
     @Autowired
     IAuthService authService;
+    @Autowired
+    private UrlStatisticService springUrlAround;
     
     private List<IgnoreUriInfo> startWithList;
     
@@ -172,34 +175,41 @@ public class AdminAccessFilter extends ZuulFilter {
     @Override
     public Object run() {
     	logger.info("--进入网关");
+    	long time=0;
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
     	logger.info("--requestUri="+request.getRequestURI());
         final String requestUri = request.getRequestURI().substring(zuulPrefix.length());
         final String method = request.getMethod();
-        BaseContextHandler.setToken(null);
-        // 不进行拦截的地址
-        if (isStartWith(requestUri)) {
-        	logger.info("--忽略身份认证");
-        	if(ignoreUrlAddHeader){
-        		this.dealIgnoreUrlRequest( request,  ctx);
+        Object dt=null;
+        try{
+            dt=springUrlAround.aroundStart(request.getRequestURI());
+            BaseContextHandler.setToken(null);
+            // 不进行拦截的地址
+            if (isStartWith(requestUri)) {
+            	logger.info("--忽略身份认证");
+            	if(ignoreUrlAddHeader){
+            		this.dealIgnoreUrlRequest( request,  ctx);
+                    return null;
+            	}
                 return null;
-        	}
-            return null;
-        }
-        if(requestUri.contains(LOG_OUT)){
-        	cleanSession(request);
-        }
-        IJwtInfo user=this.dealControledUrlRequest( request,  ctx);
-
-        if(user!=null && !SPEC_URI_INFO.contains(requestUri)){
-        	logger.info("--AdminAccessFilter.run(),开始uri访问权限检查");
-            List<PermissionInfo> permissionInfos = cacheService.getAllPermissionInfo();
-            // 判断资源是否启用权限约束
-            Collection<PermissionInfo> result = getPermissionInfos(requestUri, method, permissionInfos);
-            if(result.size()>0){
-    			checkAllow(requestUri, method, ctx, user.getUniqueName());
             }
+            if(requestUri.contains(LOG_OUT)){
+            	cleanSession(request);
+            }
+            IJwtInfo user=this.dealControledUrlRequest( request,  ctx);
+
+            if(user!=null && !SPEC_URI_INFO.contains(requestUri)){
+            	logger.info("--AdminAccessFilter.run(),开始uri访问权限检查");
+                List<PermissionInfo> permissionInfos = cacheService.getAllPermissionInfo();
+                // 判断资源是否启用权限约束
+                Collection<PermissionInfo> result = getPermissionInfos(requestUri, method, permissionInfos);
+                if(result.size()>0){
+        			checkAllow(requestUri, method, ctx, user.getUniqueName());
+                }
+            }
+        }finally{
+            springUrlAround.aroundStop(dt);
         }
       return null;
       
