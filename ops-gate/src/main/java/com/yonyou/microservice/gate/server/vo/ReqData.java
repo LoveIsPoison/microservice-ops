@@ -89,7 +89,8 @@ public class ReqData {
 	
 	public ReqData clone(){
 		ReqData r=new ReqData();
-		r.setCount(this.getCount());
+		r.count.getAndSet(this.getCount().get());
+//		r.setCount(this.getCount());
 		r.setEndTime(this.endTime);
 		r.setMax(this.max);
 		r.setMin(min);

@@ -33,21 +33,27 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yonyou.microservice.gate.server.vo.ReqData;
+import com.yonyou.microservice.gate.server.vo.TimeInterval;
 
 @Service
 public class UrlStatisticService {
 	private static final Logger logger = LoggerFactory.getLogger(UrlStatisticService.class);
 	private static final Logger loggerCnt = LoggerFactory.getLogger("com.yonyou.f4.mvc.aop.urlCnt");
 	private static final Logger loggerAll = LoggerFactory.getLogger("com.yonyou.f4.mvc.aop.urlAll");
-    private static final long OUT_INTERVAL = 1 * 60 * 1000;
     private static Timer timer = null;
     private Map<String, ReqData> dayMap = new HashMap<String, ReqData>();
 	private Map<String, ReqData> xmap = new HashMap<String, ReqData>();
-	private List<ReqData> dataList=new ArrayList();
+	@Value("${url.statistic.interval}")
+    private long OUT_INTERVAL ;
+	@Value("${url.statistic.historySize}")
+	private int historySize;
+	private List<TimeInterval> dataList=new ArrayList();
+//	private List<ReqData> dataList=new ArrayList();
     
     @PostConstruct
     public void init() {
@@ -180,14 +186,24 @@ public class UrlStatisticService {
                 tmp = xmap;
                 xmap = new HashMap<String, ReqData>();
             }
+            TimeInterval timeInterval=new TimeInterval();
+            long total=0;
 
+            timeInterval.setStopTime(System.currentTimeMillis());
+            timeInterval.setStartTime(timeInterval.getStopTime()-OUT_INTERVAL);
             StringBuilder sbd = new StringBuilder();
             sbd.append("\r\n#Report : "+OUT_INTERVAL/1000+"s \r\n");
             sbd.append(String.format(ReqData.msgTitle, "ACTION", "COUNT", "MIN(ms)", "AVG(ms)", "MAX(ms)"));
             for(ReqData dt : tmp.values()){
             	dt.setEndTime(dt.getStartTime()+OUT_INTERVAL);
                 sbd.append(dt.toString());
-                dataList.add(dt.clone());
+                timeInterval.getDataList().add(dt.clone());
+                total=total+dt.getCount().get();
+            }
+            timeInterval.setCount(total);
+            dataList.add(timeInterval);
+            if(dataList.size()>historySize){
+            	dataList.remove(0);
             }
             sbd.append("#---------------------------------------------------------------------");
             loggerCnt.info(sbd.toString());
@@ -227,11 +243,11 @@ public class UrlStatisticService {
 		}
     }
 
-	public List<ReqData> getDataList() {
+	public List<TimeInterval> getDataList() {
 		return dataList;
 	}
 
-	public void setDataList(List<ReqData> dataList) {
+	public void setDataList(List<TimeInterval> dataList) {
 		this.dataList = dataList;
 	}
     
