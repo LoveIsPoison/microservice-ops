@@ -2,7 +2,6 @@ package com.yonyou.microservice.gate.admin.entity;
 
 import java.util.Date;
 
-import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 /**
@@ -12,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "gate_ignore_uri")
 public class IgnoreUri {
     @Id
-	private int id;
+	private Integer id;
     
 	private String uri;
 	private String createBy;
@@ -20,11 +19,11 @@ public class IgnoreUri {
 	private String updateBy;
 	private Date updateDate;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
