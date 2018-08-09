@@ -36,6 +36,12 @@ spring:
       multipart:
         max-file-size: 10Mb
         max-request-size: 10Mb
+    data:
+      elasticsearch:
+         repositories:
+           enabled: true
+         cluster-nodes: 10.180.8.203:9200
+         cluster-name: es
 server:
     port: ${ops.gate.port:9003} #启动端口
 
@@ -182,4 +188,9 @@ url:
   statistic:
     historySize: ${statistic.historySize:10}
     interval: ${statistic.interval:60000} #1 * 60 * 1000
-    
+elasticsearch:
+  ip: 10.180.8.203
+  port: 9300
+  pool: 5
+  cluster:
+    name: es6.2

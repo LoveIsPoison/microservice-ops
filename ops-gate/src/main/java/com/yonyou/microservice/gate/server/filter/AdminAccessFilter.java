@@ -43,7 +43,7 @@ import com.yonyou.microservice.gate.server.feign.IAuthService;
 import com.yonyou.microservice.gate.server.feign.IIgnoreUriService;
 import com.yonyou.microservice.gate.server.feign.ILogService;
 import com.yonyou.microservice.gate.server.service.CacheService;
-import com.yonyou.microservice.gate.server.service.UrlStatisticService;
+import com.yonyou.microservice.gate.server.service.UrlProcessService;
 import com.yonyou.microservice.gate.server.utils.DbLog;
 
 import lombok.extern.slf4j.Slf4j;
@@ -101,7 +101,7 @@ public class AdminAccessFilter extends ZuulFilter {
     @Autowired
     IAuthService authService;
     @Autowired
-    private UrlStatisticService springUrlAround;
+    private UrlProcessService urlAround;
     
     private List<IgnoreUriInfo> startWithList;
     
@@ -183,7 +183,7 @@ public class AdminAccessFilter extends ZuulFilter {
         final String method = request.getMethod();
         Object dt=null;
         try{
-            dt=springUrlAround.aroundStart(request.getRequestURI());
+            dt=urlAround.aroundStart(request.getRequestURI());
             BaseContextHandler.setToken(null);
             // 不进行拦截的地址
             if (isStartWith(requestUri)) {
@@ -209,7 +209,7 @@ public class AdminAccessFilter extends ZuulFilter {
                 }
             }
         }finally{
-            springUrlAround.aroundStop(dt);
+        	urlAround.aroundStop(dt);
         }
       return null;
       
