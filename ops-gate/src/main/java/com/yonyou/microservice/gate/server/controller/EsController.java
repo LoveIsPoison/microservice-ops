@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.util.StringUtil;
-import com.xiaoleilu.hutool.date.DateUtil;
+import com.xiaoleilu.hutool.date.DateTime;
 import com.yonyou.microservice.gate.server.utils.ElasticsearchUtil;
 import com.yonyou.microservice.gate.server.utils.EsPage;
 import com.yonyou.microservice.gate.server.vo.UrlRequestVO;
@@ -29,7 +29,7 @@ public class EsController {
 	/**
      * 测试索引
      */
-    private String indexName="test";
+    private String indexName="gaterequest";
 
     /**
      * 类型
@@ -93,7 +93,7 @@ public String deleteIndex(HttpServletRequest request, HttpServletResponse respon
         esModel.setStartTime(System.currentTimeMillis());
         esModel.setStopTime(esModel.getStartTime()+60000);
         esModel.setUri("/abcde/ab");
-        esModel.setId(formatter.format(new Date()));
+//        esModel.setId(new DateTime());
         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(esModel);
         String id = ElasticsearchUtil.addData(jsonObject, indexName, esType, jsonObject.getString("id"));
         return id;

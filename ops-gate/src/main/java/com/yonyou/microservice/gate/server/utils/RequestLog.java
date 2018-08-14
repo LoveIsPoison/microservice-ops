@@ -63,11 +63,12 @@ public class RequestLog extends Thread {
                 bufferedLogList.add(requestQueue.take());
                 requestQueue.drainTo(bufferedLogList);
                 if (bufferedLogList != null && bufferedLogList.size() > 0) {
-                	log.info("--send data to es");
                     // 写入日志
                     for(UrlRequestVO vo:bufferedLogList){
                         JSONObject jsonObject = (JSONObject) JSONObject.toJSON(vo);
-                        String id = ElasticsearchUtil.addData(jsonObject, indexName, esType, jsonObject.getString("id"));
+                        log.info("--send data to es,data="+jsonObject.toJSONString());
+                        String id = ElasticsearchUtil.addData(jsonObject, indexName, esType);
+                    	log.info("--send data to es,id="+id);
                     }
                 }
             } catch (Exception e) {

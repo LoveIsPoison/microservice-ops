@@ -20,6 +20,7 @@ package com.yonyou.microservice.gate.server.service;
 import java.io.UnsupportedEncodingException;
 import java.sql.Date;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -45,6 +46,11 @@ public class UrlProcessService {
 	private static final Logger logger = LoggerFactory.getLogger(UrlProcessService.class);
 //	private static final Logger loggerCnt = LoggerFactory.getLogger("com.yonyou.f4.mvc.aop.urlCnt");
 	private static final Logger loggerAll = LoggerFactory.getLogger("com.yonyou.f4.mvc.aop.urlAll");
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+    private SimpleDateFormat formatterm = new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+    private SimpleDateFormat formatterh = new SimpleDateFormat("yyyy-MM-dd HH"); 
+    private SimpleDateFormat formatterd = new SimpleDateFormat("yyyy-MM-dd"); 
 //    private static Timer timer = null;
 //    private Map<String, ReqData> dayMap = new HashMap<String, ReqData>();
 //	private Map<String, ReqData> xmap = new HashMap<String, ReqData>();
@@ -79,11 +85,15 @@ public class UrlProcessService {
 		long begin = System.currentTimeMillis();
 
 		if(uri != null) {
-			DateTime id=new DateTime(begin);
-			v.setId(id.toString());
+			Date id=new Date(begin);
+			v.setTime(formatter.format(id));
+			v.setTimem(formatterm.format(id));
+			v.setTimeh(formatterh.format(id));
+			v.setTimed(formatterd.format(id));
 			v.setStartTime(begin);
 			v.setUri(uri);
 			v.setStartTime(begin);
+			v.setTimeUri(v.getTime()+v.getUri());
 	        return v;
 		}
 		return null;
@@ -95,6 +105,30 @@ public class UrlProcessService {
 		long t = dt.getStopTime() - dt.getStartTime();
 		dt.setUsedTime(t);
 		RequestLog.getInstance().offerQueue(dt);
+//		
+//		UrlRequestVO dt1 = new UrlRequestVO();
+//		dt1.setTime(dt.getTime());
+//		dt1.setStartTime(dt.getStartTime());
+//		dt1.setStartTimeLabel(dt.getStartTimeLabel());
+//		dt1.setUri(dt.getUri());
+//		dt1.setUsedTime(dt.getUsedTime());
+//		dt1.setTimeUri(dt.getTimeUri());
+//		dt1.setTimem(dt.getTimem());
+//		dt1.setTimeh(dt.getTimeh());
+//		dt1.setTimed(dt.getTimed());
+//		RequestLog.getInstance().offerQueue(dt1);
+//
+//		UrlRequestVO dt2 = new UrlRequestVO();
+//		dt2.setTime(dt.getTime());
+//		dt2.setStartTime(dt.getStartTime());
+//		dt2.setStartTimeLabel(dt.getStartTimeLabel());
+//		dt2.setUri(dt.getUri()+"abc");
+//		dt2.setUsedTime(dt.getUsedTime());
+//		dt2.setTimeUri(dt.getTimeUri()+"abc");
+//		dt2.setTimem(dt.getTimem());
+//		dt2.setTimeh(dt.getTimeh());
+//		dt2.setTimed(dt.getTimed());
+//		RequestLog.getInstance().offerQueue(dt2);
 	}
 
 //

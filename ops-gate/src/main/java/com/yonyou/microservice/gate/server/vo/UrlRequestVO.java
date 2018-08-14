@@ -3,10 +3,16 @@ package com.yonyou.microservice.gate.server.vo;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
+
+import com.xiaoleilu.hutool.date.DateTime;
 
 //@Document(indexName = "urlstatistic", type = "urlrequest")
 public class UrlRequestVO implements Serializable {
-	private String id;
+	private String time;
+	private String timem;
+	private String timeh;
+	private String timed;
     private static final long serialVersionUID = -1L;
 	private long startTime=0;
 	private long stopTime=0;
@@ -14,6 +20,8 @@ public class UrlRequestVO implements Serializable {
     private String startTimeLabel;
     private String stopTimeLabel;
     private String uri;
+    private String key=UUID.randomUUID().toString();
+    private String timeUri;
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 	public long getStartTime() {
 		return startTime;
@@ -53,11 +61,35 @@ public class UrlRequestVO implements Serializable {
 	public void setUri(String uri) {
 		this.uri = uri;
 	}
-	public String getId() {
-		return id;
+	public String getTime() {
+		return time;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setTime(String time) {
+		this.time = time;
 	}
-    
+	public String getTimeUri() {
+		return timeUri;
+	}
+	public void setTimeUri(String timeUri) {
+		this.timeUri = timeUri;
+	}
+	public String getTimem() {
+		return timem;
+	}
+	public void setTimem(String timem) {
+		this.timem = timem;
+	}
+	public String getTimeh() {
+		return timeh;
+	}
+	public void setTimeh(String timeh) {
+		this.timeh = timeh;
+	}
+	public String getTimed() {
+		return timed;
+	}
+	public void setTimed(String timed) {
+		this.timed = timed;
+	}
+	
 }
