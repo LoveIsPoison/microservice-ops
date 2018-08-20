@@ -18,32 +18,90 @@ public class UrlStatisticController {
 	private static Logger logger=Logger.getLogger(UrlStatisticController.class);
 	@Autowired
 	private ElasticsearchUtil elasticsearchUtil;
-	
-	@ResponseBody
-    @RequestMapping(value = "/url/statistic/second", method = RequestMethod.GET)
-    public List<UrlRequestStatisticVO> urlStatisticSecond(@RequestParam String startTime,
-    		@RequestParam String stopTime) {
-		return elasticsearchUtil.groupSec(startTime,stopTime);
-    }
 
 	@ResponseBody
-    @RequestMapping(value = "/url/statistic/minute", method = RequestMethod.GET)
-    public List<UrlRequestStatisticVO> urlStatisticMinute(@RequestParam String startTime,
-    		@RequestParam String stopTime) {
-		return elasticsearchUtil.groupMinu(startTime,stopTime);
+    @RequestMapping(value = "/url/statistic", method = RequestMethod.GET)
+    public List<UrlRequestStatisticVO> urlStatistic(@RequestParam String startTime,
+    		@RequestParam String stopTime,@RequestParam String type,
+    		@RequestParam(defaultValue="null") String sortField,
+    		@RequestParam(defaultValue="asc") String order,
+    		@RequestParam(defaultValue="20") int size) {
+		List<UrlRequestStatisticVO> result=null;
+		if("day".equals(type)){
+			result= elasticsearchUtil.groupDay(startTime,stopTime,size);
+		}else if("hour".equals(type)){
+			result= elasticsearchUtil.groupHour(startTime,stopTime,size);
+		}else if("minute".equals(type)){
+			result= elasticsearchUtil.groupMinu(startTime,stopTime,size);
+		}else if("second".equals(type)){
+			result= elasticsearchUtil.groupSec(startTime,stopTime,size);
+		}
+//		if(!"null".equals(sortField)){
+//			boolean desc=false;
+//			if(!"asc".equals(order)){
+//				logger.info("--sort desc");
+//				desc=true;
+//			}else {
+//				logger.info("--sort asc");
+//			}
+//			if("time".equals(sortField)){
+//				elasticsearchUtil.compareDate(result,desc);
+//				logger.info("--order by time");
+//			}else{
+//				result=elasticsearchUtil.sort(result, sortField,desc);
+//				logger.info("--order by "+sortField);
+//			}
+//		}
+		this.sort(result, sortField, order);
+		
+		return result;
     }
+	private List<UrlRequestStatisticVO> sort(List<UrlRequestStatisticVO> result,String sortField,String order){
+		if(!"null".equals(sortField)){
+			boolean desc=false;
+			if(!"asc".equals(order)){
+				logger.info("--sort desc");
+				desc=true;
+			}else {
+				logger.info("--sort asc");
+			}
+			if("time".equals(sortField)){
+				elasticsearchUtil.compareDate(result,desc);
+				logger.info("--order by time");
+			}else{
+				result=elasticsearchUtil.sort(result, sortField,desc);
+				logger.info("--order by "+sortField);
+			}
+		}
+		
+		return result;
+	}
 
 	@ResponseBody
-    @RequestMapping(value = "/url/statistic/hour", method = RequestMethod.GET)
-    public List<UrlRequestStatisticVO> urlStatisticHour(@RequestParam String startTime,
-    		@RequestParam String stopTime) {
-		return elasticsearchUtil.groupHour(startTime,stopTime);
-    }
-
-	@ResponseBody
-    @RequestMapping(value = "/url/statistic/day", method = RequestMethod.GET)
-    public List<UrlRequestStatisticVO> urlStatisticDay(@RequestParam String startTime,
-    		@RequestParam String stopTime) {
-		return elasticsearchUtil.groupDay(startTime,stopTime);
+    @RequestMapping(value = "/url/traffic", method = RequestMethod.GET)
+    public List<UrlRequestStatisticVO> urlTraffic(@RequestParam String startTime,
+    		@RequestParam String stopTime,@RequestParam String type,
+    		@RequestParam(defaultValue="null") String sortField,
+    		@RequestParam(defaultValue="asc") String order,
+    		@RequestParam(defaultValue="20") int size) {
+		List<UrlRequestStatisticVO> result=null;
+		if("day".equals(type)){
+			result= elasticsearchUtil.trafficDay(startTime,stopTime,size);
+		}else if("hour".equals(type)){
+			result= elasticsearchUtil.trafficHour(startTime,stopTime,size);
+		}else if("minute".equals(type)){
+			result= elasticsearchUtil.trafficMinu(startTime,stopTime,size);
+		}else if("second".equals(type)){
+			result= elasticsearchUtil.trafficSec(startTime,stopTime,size);
+		}
+//		if(!"null".equals(sortField)){
+//			boolean desc=false;
+//			if(!"asc".equals(order)){
+//				desc=true;
+//			}
+//			result=elasticsearchUtil.sort(result, sortField,desc);
+//		}
+		this.sort(result, sortField, order);
+		return result;
     }
 }

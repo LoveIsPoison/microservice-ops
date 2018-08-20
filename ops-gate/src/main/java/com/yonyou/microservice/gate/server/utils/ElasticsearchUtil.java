@@ -1,6 +1,8 @@
 package com.yonyou.microservice.gate.server.utils;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -8,6 +10,7 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.math.stat.descriptive.summary.Product;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
@@ -38,8 +41,8 @@ import org.elasticsearch.search.aggregations.metrics.min.InternalMin;
 import org.elasticsearch.search.aggregations.metrics.min.MinAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.sum.Sum;
 import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
-import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -404,22 +407,20 @@ private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchUtil.c
     	        client.close();
     }
     
-    public List<UrlRequestStatisticVO> group(String timeField,String startTime,String stopTime){
+    public List<UrlRequestStatisticVO> group(String timeField,String startTime,String stopTime,int size){
     	List<UrlRequestStatisticVO> result=new ArrayList();
     	RangeQueryBuilder rangequerybuilder = QueryBuilders.rangeQuery("time").from(startTime).to(stopTime);
-//        SearchSourceBuilder sourceBuilder = new SearchSourceBuilder();
-//        sourceBuilder.query(rangequerybuilder);
-
+//    	FieldSortBuilder sortBuilder=new FieldSortBuilder(timeField);
     	SearchRequestBuilder requestBuilder = client.prepareSearch("gaterequest");
         MinAggregationBuilder min = AggregationBuilders.min("min").field("usedTime");
         MaxAggregationBuilder max = AggregationBuilders.max("max").field("usedTime");
         AvgAggregationBuilder avg = AggregationBuilders.avg("avg").field("usedTime");
-        AggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg").field(timeField).subAggregation(AggregationBuilders.terms("add").field("uri")
-        		.subAggregation(min).subAggregation(max).subAggregation(avg));
-        SearchResponse response = requestBuilder.addAggregation(aggregationBuilder).setQuery(rangequerybuilder)
+        AggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg").field(timeField)
+        		.subAggregation(AggregationBuilders.terms("add").field("uri")
+        		.subAggregation(min).subAggregation(max).subAggregation(avg)).size(size);
+        SearchResponse response = requestBuilder.addAggregation(aggregationBuilder).setQuery(rangequerybuilder) //.addSort(sortBuilder)
                 .setExplain(true).execute().actionGet();
         Terms agg = response.getAggregations().get("agg");
-        System.out.println(agg.getBuckets());
         for (Terms.Bucket bucket : agg.getBuckets()) {
         	LOGGER.info(bucket.getKey() + ":" + bucket.getDocCount());
             Terms tms = bucket.getAggregations().get("add");
@@ -444,20 +445,110 @@ private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchUtil.c
         return result;
     }
     
-    public List<UrlRequestStatisticVO> groupSec(String startTime,String stopTime){
-    	return group("time",startTime,stopTime);
+    public List<UrlRequestStatisticVO> groupByTime(String timeField,String startTime,String stopTime,int size){
+    	List<UrlRequestStatisticVO> result=new ArrayList();
+    	RangeQueryBuilder rangequerybuilder = QueryBuilders.rangeQuery("time").from(startTime).to(stopTime);
+
+    	SearchRequestBuilder requestBuilder = client.prepareSearch("gaterequest");
+        MinAggregationBuilder min = AggregationBuilders.min("min").field("usedTime");
+        MaxAggregationBuilder max = AggregationBuilders.max("max").field("usedTime");
+        AvgAggregationBuilder avg = AggregationBuilders.avg("avg").field("usedTime");
+        AggregationBuilder aggregationBuilder = AggregationBuilders.terms("agg").field(timeField)
+        		.subAggregation(min).subAggregation(max).subAggregation(avg).size(size);
+        SearchResponse response = requestBuilder.addAggregation(aggregationBuilder).setQuery(rangequerybuilder)
+                .setExplain(true).execute().actionGet();
+        Terms agg = response.getAggregations().get("agg");
+        for (Terms.Bucket bucket : agg.getBuckets()) {
+           LOGGER.info(bucket.getKey() + ":" + bucket.getDocCount());
+      	   InternalMin minv=bucket.getAggregations().get("min");
+      	   InternalMax maxv=bucket.getAggregations().get("max");
+      	   InternalAvg avgv=bucket.getAggregations().get("avg");
+      	    LOGGER.info(bucket.getKey() + ":" + bucket.getDocCount()+",min="+minv.getValueAsString()+
+          		   ",max="+maxv.getValueAsString()+",avg="+avgv.getValueAsString());
+             UrlRequestStatisticVO v=new UrlRequestStatisticVO();
+             v.setTime((String)bucket.getKey());
+             v.setCount(bucket.getDocCount());
+             v.setMax(maxv.getValue());
+             v.setMin(minv.getValue());
+             v.setAvg(avgv.getValue());
+             result.add(v);
+        }
+        return result;
     }
     
-    public List<UrlRequestStatisticVO> groupMinu(String startTime,String stopTime){
-    	return group("timem",startTime,stopTime);
+    public List<UrlRequestStatisticVO> groupSec(String startTime,String stopTime,int size){
+    	return group("time",startTime,stopTime,size);
+    }
+    
+    public List<UrlRequestStatisticVO> groupMinu(String startTime,String stopTime,int size){
+    	return group("timem",startTime,stopTime,size);
 
     }
     
-    public List<UrlRequestStatisticVO> groupHour(String startTime,String stopTime){
-    	return group("timeh",startTime,stopTime);
+    public List<UrlRequestStatisticVO> groupHour(String startTime,String stopTime,int size){
+    	return group("timeh",startTime,stopTime,size);
     }
     
-    public List<UrlRequestStatisticVO> groupDay(String startTime,String stopTime){
-    	return group("timed",startTime,stopTime);
+    public List<UrlRequestStatisticVO> groupDay(String startTime,String stopTime,int size){
+    	return group("timed",startTime,stopTime,size);
     }
+    
+    public List<UrlRequestStatisticVO> trafficSec(String startTime,String stopTime,int size){
+    	return groupByTime("time",startTime,stopTime,size);
+    }
+    
+    public List<UrlRequestStatisticVO> trafficMinu(String startTime,String stopTime,int size){
+    	return groupByTime("timem",startTime,stopTime,size);
+
+    }
+    
+    public List<UrlRequestStatisticVO> trafficHour(String startTime,String stopTime,int size){
+    	return groupByTime("timeh",startTime,stopTime,size);
+    }
+    
+    public List<UrlRequestStatisticVO> trafficDay(String startTime,String stopTime,int size){
+    	return groupByTime("timed",startTime,stopTime,size);
+    }
+    
+    public List<UrlRequestStatisticVO> sort(List<UrlRequestStatisticVO> list,String field,boolean desc){
+    	Comparator<UrlRequestStatisticVO> comparator=null;
+    	if("count".equals(field)){
+    		comparator=(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) 
+    				->  ElasticsearchUtil.compareCount(v1,v2);
+    	}else if("max".equals(field)){
+    		comparator=(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) 
+    				->  ElasticsearchUtil.compareMax(v1,v2);
+    	}else if("min".equals(field)){
+    		comparator=(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) 
+    				->  ElasticsearchUtil.compareMin(v1,v2);
+    	}else {//if("avg".equals(field))
+    		comparator=(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) 
+    				->  ElasticsearchUtil.compareAvg(v1,v2);
+    	}
+		if(desc){
+			list.sort(comparator.reversed());
+		}else{
+			list.sort(comparator);
+		}
+    	return list;
+    }
+    public static int compareCount(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) {
+    	   return Long.compare(v1.getCount(),v2.getCount());
+    }
+    public static int compareMax(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) {
+	       return Double.compare(v1.getMax(),v2.getMax());
+    }
+    public static int compareMin(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) {
+	       return Double.compare(v1.getMin(),v2.getMin());
+    }
+    public static int compareAvg(UrlRequestStatisticVO v1, UrlRequestStatisticVO v2) {
+	       return Double.compare(v1.getAvg(),v2.getAvg());
+    }
+    public void compareDate(List<UrlRequestStatisticVO> list,boolean desc) {
+    	if(desc){
+        	Collections.sort(list, Comparator.comparing(UrlRequestStatisticVO::getTime).reversed());
+    	}else{
+        	Collections.sort(list, Comparator.comparing(UrlRequestStatisticVO::getTime));
+    	}
+ }
 }
