@@ -55,7 +55,6 @@ public class ScheduleJobService {
      * @throws ClassNotFoundException
      * @throws SchedulerException
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
     public void add(ScheduleEntity scheduleEntity) throws ClassNotFoundException,
             SchedulerException {
     	JobDetail jobDetail =JobBuilder.newJob(ScheduledJob.class)
@@ -364,11 +363,11 @@ public class ScheduleJobService {
      * @return
      * @throws Exception
      */
-    public Pager getAllTaskLogs(int currindex,int size,Map queryMap) throws Exception {
+    @SuppressWarnings({ "unused" })
+	public Pager getAllTaskLogs(int currindex,int size,Map<?, ?> queryMap) throws Exception {
     	 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    
          
-      List qList = new LinkedList<Object>();
+      List<Object> qList = new LinkedList<Object>();
       StringBuilder s = new StringBuilder("select * from TS_SCHEDLED_LOG where 1=1\n");
       
       if(!StrUtil.isBlank((String)queryMap.get("taskName"))){

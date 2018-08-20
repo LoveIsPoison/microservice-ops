@@ -64,15 +64,12 @@
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-
-		<!-- 连接池 -->
+		</dependency> 
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid</artifactId>
-			<version>1.0.19</version>
+			<groupId>com.yonyou.cloud</groupId>
+			<artifactId>datasource-hikaricp-starter</artifactId>
+			<version>1.1.0</version>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>

@@ -38,12 +38,12 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- 持久层 <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-jdbc</artifactId> 
-			</dependency> <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
-			</dependency> <dependency> <groupId>tk.mybatis</groupId> <artifactId>mapper-spring-boot-starter</artifactId> 
-			<version>1.1.2</version> </dependency> <dependency> <groupId>com.github.pagehelper</groupId> 
-			<artifactId>pagehelper-spring-boot-starter</artifactId> <version>1.1.2</version> 
-			</dependency> -->
+	 
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+	 
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-feign</artifactId>
@@ -53,10 +53,6 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
 		</dependency>
-
-		<!-- 数据库驱动 <dependency> <groupId>com.alibaba</groupId> <artifactId>druid</artifactId> 
-			<version>1.0.11</version> </dependency> -->
-
 		<dependency>
 			<groupId>tk.mybatis</groupId>
 			<artifactId>mapper-spring-boot-starter</artifactId>
@@ -86,18 +82,11 @@
 			<artifactId>ops-common</artifactId>
 		</dependency>
 		
-			<dependency>
-				<groupId>com.alibaba</groupId>
-				<artifactId>druid</artifactId>
-				<version>1.0.11</version>
-			</dependency>
-
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.30</version>
+			<groupId>com.yonyou.cloud</groupId>
+			<artifactId>datasource-hikaricp-starter</artifactId>
+			<version>1.1.0</version>
 		</dependency>
-
 		<!-- Redis客户端 -->    
 		<dependency>    
 		   <groupId>redis.clients</groupId>     

@@ -9,28 +9,13 @@ spring:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
         default-property-inclusion: NON_NULL
-    datasource:
-        name: test
-#        :jdbc:mysql://10.180.8.205:3306/ag_admin?useUnicode=true&characterEncoding=UTF8
-        url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/ag_admin?useUnicode=true&characterEncoding=UTF8}
-        username: ${db.yc_base.username:test}
-        password: ${db.yc_base.pwd:Pass1q2w}
-        # 使用druid数据源
-        type: com.alibaba.druid.pool.DruidDataSource
-        driver-class-name: com.mysql.jdbc.Driver
-        filters: stat
-        maxActive: 20
-        initialSize: 1
-        maxWait: 60000
-        minIdle: 1
-        timeBetweenEvictionRunsMillis: 60000
-        minEvictableIdleTimeMillis: 300000
-        validationQuery: select 'x'
-        testWhileIdle: true
-        testOnBorrow: false
-        testOnReturn: false
-        poolPreparedStatements: true
-        maxOpenPreparedStatements: 20
+    datasource: 
+      driverClassName : com.mysql.jdbc.Driver
+      url: ${db.yc_base.url:jdbc:mysql://localhost:3306:3306/ops_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+      username: ${db.yc_base.username:root}
+      password: ${db.yc_base.pwd:root}
+      hikari:
+        dynamic: false #或者不配     
   
     rabbitmq:
         host: ${rabbitmq.host:10.180.8.200}
@@ -43,10 +28,19 @@ spring:
 #    zipkin:
 #        base-url: http://10.180.4.221:8808
       
-mybatis:
-    basepackage: com.yonyou.microservice.gate.admin.mapper
-    xmlLocation: classpath:mapper/**/*.xml
+#mybatis:
+#    basepackage: com.yonyou.microservice.gate.admin.mapper
+#    xmlLocation: classpath:mapper/*.xml
 
+#通用mapper的配置 https://mapperhelper.github.io/docs/1.integration/
+mapper: 
+  mappers: tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  identity: MYSQL
+
+mybatis: 
+  type-aliases-package: com.yonyou.microservice.gate.admin.entity
+  mapper-locations: classpath:mapper/*.xml
 server:
     port: ${ops.admin.port:8760}
 

@@ -27,11 +27,13 @@ spring:
 #        password: ${rabbitmq.password:Pass1234}
 #        virtual-host: ${rabbitmq.vhost:/}
         
-    datasource:
-       driverClassName: com.mysql.jdbc.Driver
-       url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-       username: ${db.yc_base.username:test}
-       password: ${db.yc_base.pwd:Pass1q2w}
+    datasource: 
+      driverClassName : com.mysql.jdbc.Driver
+      url: ${db.yc_base.url:jdbc:mysql://localhost:3306/ops_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+      username: ${db.yc_base.username:root}
+      password: ${db.yc_base.pwd:root}
+      hikari:
+        dynamic: false #或者不配
     http:
       multipart:
         max-file-size: 10Mb
@@ -99,9 +101,9 @@ zuul:
 
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-    username: ${db.yc_base.username:test}
-    password: ${db.yc_base.pwd:Pass1q2w}
+    url: ${db.yc_base.url:jdbc:mysql://localhost:3306/ops_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    username: ${db.yc_base.username:root}
+    password: ${db.yc_base.pwd:root}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.cloud.zuul.db.mapper
@@ -157,16 +159,16 @@ groovy:
     interval: ${groovy.interval:60}
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-    username: ${db.yc_base.username:test}
-    password: ${db.yc_base.pwd:Pass1q2w}
+    url: ${db.yc_base.url:jdbc:mysql://localhost:3306/ops_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    username: ${db.yc_base.username:root}
+    password: ${db.yc_base.pwd:root}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.microservice.filter.mapper
     xmlLocation: classpath:mapper/**/*.xml
-redis:
-  hostName: ${redis.yc_base.ip:10.180.8.200}
-  port: ${redis.yc_base.port:32044}
+redis: 
+  hostName: ${redis.yc_base.ip:10.180.4.111}
+  port: ${redis.yc_base.port:6379}
   password: ${redis.yc_base.password:}
   timeout: ${redis.yc_base.timeout:10000}
   testWhileIdle: true 
@@ -178,3 +180,4 @@ redis:
   timeBetweenEvictionRunsMillis: ${redis.yc_base.timeBetweenEvictionRunsMillis:30000}  
   testOnBorrow: ${redis.yc_base.testOnBorrow:true}  
   expire: ${redis.yc_base.expire:2592000} #2592000
+ 

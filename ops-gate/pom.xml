@@ -60,13 +60,20 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-eureka</artifactId>
-		</dependency> <!---->
-
+		</dependency> 
 		<dependency>
+			<groupId>com.yonyou.cloud</groupId>
+			<artifactId>datasource-hikaricp-starter</artifactId>
+			</dependency>
+				<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+     	<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>microservice-zuul-db-starter</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency> 
 		<!-- -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -78,11 +85,11 @@
 			<artifactId>ops-auth-client</artifactId>
 			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
-		<dependency>
+    	<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>microservice-gate-ratelimit</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+		</dependency>  
 
       <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -106,11 +113,7 @@
 			<version>1.5.1.RELEASE</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.1.4</version>
-		</dependency>
+		 
 		<!-- Redis客户端 -->    
 		<dependency>    
 		   <groupId>redis.clients</groupId>     
@@ -152,12 +155,12 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
-		
-		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.1.4</version>
+				<dependency>
+			<groupId>com.yonyou.cloud</groupId>
+			<artifactId>datasource-hikaricp-starter</artifactId>
+			<version>1.1.0</version>
 		</dependency>
+		 
 		</dependencies>
 	</dependencyManagement>
 
