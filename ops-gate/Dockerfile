@@ -12,4 +12,4 @@ WORKDIR /usr/src/myapp/
 
 EXPOSE 9002
 
-#CMD /agent/env.sh run
+CMD /agent/env.sh run
