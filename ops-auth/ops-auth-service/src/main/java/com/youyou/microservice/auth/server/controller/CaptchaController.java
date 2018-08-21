@@ -1,6 +1,7 @@
 package com.youyou.microservice.auth.server.controller;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,7 +20,7 @@ import com.youyou.microservice.auth.server.util.user.JwtAuthenticationResponse;
 @RestController
 @RequestMapping("captcha")
 public class CaptchaController {
-	private static Logger logger=Logger.getLogger(CaptchaController.class);
+	private static Logger logger=LoggerFactory.getLogger(CaptchaController.class);
 
     @Autowired
     private AuthService authService;

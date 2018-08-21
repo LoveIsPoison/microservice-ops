@@ -12,6 +12,7 @@ import com.yonyou.microservice.gate.common.context.BaseContextHandler;
 import feign.RequestInterceptor;
 import feign.RequestTemplate;
 
+
 /**
  * @author joy
  */

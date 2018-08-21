@@ -5,7 +5,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,7 +32,7 @@ import com.youyou.microservice.auth.server.vo.FrontUser;
 @Service
 public class AuthServiceImpl implements AuthService {
 	private static final String TEST_CAPTCHA="8888";
-	private static Logger logger=Logger.getLogger(AuthServiceImpl.class);
+	private static Logger logger=LoggerFactory.getLogger(AuthServiceImpl.class);
 
     private JwtTokenUtil jwtTokenUtil;
     private IUserService userService;

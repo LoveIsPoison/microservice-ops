@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>com.yonyou.cloud</groupId>
 		<artifactId>ops-auth</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>1.0.0</version>
 	</parent>
 
 	<dependencies>
@@ -26,9 +26,13 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-openfeign-core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-core</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -39,12 +43,11 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>common-elegance</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
-	
-	
-		<distributionManagement>
+
+
+	<distributionManagement>
 		<repository>
 			<id>nexus-releases</id>
 			<name>Releases name</name>

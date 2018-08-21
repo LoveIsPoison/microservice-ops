@@ -7,10 +7,11 @@ import java.lang.reflect.Modifier;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ReflectionUtils {
-	private static final Logger logger = Logger.getLogger(ReflectionUtils.class);
+	private static final Logger logger = LoggerFactory.getLogger(ReflectionUtils.class);
 
     /**
      * 直接设置对象属性值,无视private/protected修饰符,不经过setter函数.

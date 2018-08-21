@@ -7,42 +7,25 @@ spring:
     jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
-        default-property-inclusion: non_null
+        default-property-inclusion: NON_NULL
     redis:
       cluster: 
-        nodes: ${redis.cluster.nodes}
-        
-    #redis:
-    #    database: 1
-    #    host: ${redis.host:10.180.8.220}
-    #    pool:
-    #        max-active: 20
-    
-    
-    #rabbitmq配置
-#    rabbitmq:
-#        host: ${rabbitmq.host:10.180.4.221}
-#        port : ${rabbitmq.port:5672}
-#        username: ${rabbitmq.username:mqadmin}
-#        password: ${rabbitmq.password:Pass1234}
-#        virtual-host: ${rabbitmq.vhost:/}
-        
+        nodes: ${redis.cluster.nodes:10.180.8.209:7002}
+      url: 10.180.8.209
+      port: 7002
     datasource:
        driverClassName: com.mysql.jdbc.Driver
-       url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-       username: ${db.yc_base.username:root}
-       password: ${db.yc_base.pwd:password}
-    http:
+       url: jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4
+       username: test
+       password: Pass1q2w
+    servlet:
       multipart:
         max-file-size: 10Mb
         max-request-size: 10Mb
 server:
     port: ${ops.gate.port:9003} #启动端口
-
-ajpport: 9101
-jvmroute: ""
-
-#
+    
+    
 zuul:
   ignored-services: "*"
   sensitive-headers:
@@ -92,20 +75,10 @@ zuul:
   host: 
     connect-timeout-millis: 60000
     socket-timeout-millis: 60000
-      
   store:
     mysql:
       enabled: true
-
-  db:
-    name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-    username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:password}
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    basepackage: com.yonyou.cloud.zuul.db.mapper
-    xmlLocation: classpath:mapper/**/*.xml
+      
 ribbon:
   eureka:
     enabled: true
@@ -114,7 +87,6 @@ ribbon:
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 1
   OkToRetryOnAllOperations: false
-
 
 hystrix:
   threadpool:
@@ -129,7 +101,6 @@ hystrix:
           thread:
             timeoutInMilliseconds: 50000
 
-
 gate:
   ignore:
     startWith: /static,/auth/jwt,/captcha/jwt
@@ -137,6 +108,7 @@ gate:
 logging:
   level:
     root: info
+    
 auth:
   serviceId: ops-auth
   user:
@@ -149,32 +121,13 @@ auth:
     secret: 123456
     pub-key:
       path: client/pub.key
-#jwt:
-#  params: openid  #demo:openid,test
-groovy:
-  filter:
-    path: ${groovy.path:D:\\Del\\groovy\\}
-    interval: ${groovy.interval:60}
-  db:
-    name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-    username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:password}
-    type: com.alibaba.druid.pool.DruidDataSource
-    driver-class-name: com.mysql.jdbc.Driver
-    basepackage: com.yonyou.microservice.filter.mapper
-    xmlLocation: classpath:mapper/**/*.xml
+
 redis:
-  hostName: ${redis.yc_base.ip:10.180.8.200}
-  port: ${redis.yc_base.port:32044}
-  password: ${redis.yc_base.password:}
-  timeout: ${redis.yc_base.timeout:10000}
-  testWhileIdle: true 
-  maxIdle: ${redis.yc_base.maxIdle:300}  
-  maxTotal: ${redis.yc_base.maxTotal:1000}  
-  maxWaitMillis: ${redis.yc_base.maxWaitMillis:1000}  
-  minEvictableIdleTimeMillis: ${redis.yc_base.minEvictableIdleTimeMillis:300000}  
-  numTestsPerEvictionRun: ${redis.yc_base.numTestsPerEvictionRun:1024}  
-  timeBetweenEvictionRunsMillis: ${redis.yc_base.timeBetweenEvictionRunsMillis:30000}  
-  testOnBorrow: ${redis.yc_base.testOnBorrow:true}  
-  expire: ${redis.yc_base.expire:2592000} #2592000
+  expire: ${redis.yc_base.expire:2592000} #2592000 30天
+mybatis:
+  type-aliases-package: com.yonyou.cloud.zuul.db.entity
+  mapper-locations: classpath:zuul/mapper/*.xml
+mapper: 
+  mappers: tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  identity: MYSQL

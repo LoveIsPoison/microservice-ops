@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -69,7 +70,7 @@ public class AdminAccessFilter extends ZuulFilter {
 	private static final String LOG_OUT="autht/invalid";
 	private static final String SPEC_URI_INFO="/admin/user/front/info,/admin/menu/all,/admin/user/front/menus";
 	private static final String SPEC_URI_MENUS="admin/user/front/menus";
-	private static Logger logger=Logger.getLogger(AdminAccessFilter.class);
+	private Logger logger = LoggerFactory.getLogger(AdminAccessFilter.class);
     
     @Autowired
     private ILogService logService;

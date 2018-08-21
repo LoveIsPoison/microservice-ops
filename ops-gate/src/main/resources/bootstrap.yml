@@ -3,7 +3,7 @@ spring:
     config:
       discovery:
         enabled: true
-        serviceId: server-config
+        serviceId: SERVER-CONFIG
       name: port,db,redis,gate
       profile: ${config.profile:dev}
 management:
@@ -18,7 +18,7 @@ eureka:
 #        ip-address: 127.0.0.1
     client:
         serviceUrl:
-            defaultZone: ${eureka.url:http://10.180.8.200:32432/eureka/}
+            defaultZone: http://10.180.8.208:30834/eureka/
                     # docker 部署开启
 #            defaultZone: http://center:8761/eureka/
 
