@@ -1,8 +1,11 @@
 package com.yonyou.microservice.gate.server.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -10,7 +13,6 @@ import java.util.UUID;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.math.stat.descriptive.summary.Product;
 import org.elasticsearch.action.admin.indices.create.CreateIndexResponse;
 import org.elasticsearch.action.admin.indices.delete.DeleteIndexResponse;
 import org.elasticsearch.action.admin.indices.exists.indices.IndicesExistsRequest;
@@ -31,6 +33,8 @@ import org.elasticsearch.index.query.RangeQueryBuilder;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilder;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.aggregations.bucket.histogram.HistogramAggregationBuilder;
+import org.elasticsearch.search.aggregations.bucket.histogram.InternalHistogram;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.aggregations.bucket.terms.TermsAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.avg.AvgAggregationBuilder;
@@ -42,7 +46,6 @@ import org.elasticsearch.search.aggregations.metrics.min.MinAggregationBuilder;
 import org.elasticsearch.search.aggregations.metrics.sum.Sum;
 import org.elasticsearch.search.aggregations.metrics.sum.SumAggregationBuilder;
 import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
-import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,6 +59,7 @@ import com.yonyou.microservice.gate.server.vo.UrlRequestStatisticVO;
 public class ElasticsearchUtil {
 
 private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchUtil.class);
+private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
 
     @Autowired
     private TransportClient transportClient;
@@ -550,5 +554,58 @@ private static final Logger LOGGER = LoggerFactory.getLogger(ElasticsearchUtil.c
     	}else{
         	Collections.sort(list, Comparator.comparing(UrlRequestStatisticVO::getTime));
     	}
- }
+    }
+    
+    public List<UrlRequestStatisticVO> groupByHistogram(String timeField,String startTime,String stopTime,
+    		int intervalSecond) throws ParseException{
+    	List<UrlRequestStatisticVO> result=new ArrayList();
+    	if(startTime.length()<11){
+    		startTime=startTime+" 00:00:00";
+    	}
+    	if(stopTime.length()<11){
+    		stopTime=stopTime+" 00:00:00";
+    	}
+        Date date = formatter.parse(startTime);
+        long minBound=date.getTime();
+        date = formatter.parse(stopTime);
+        long maxBound=date.getTime();
+    	RangeQueryBuilder rangequerybuilder = QueryBuilders.rangeQuery(timeField).from(minBound).to(maxBound);
+    	SearchRequestBuilder requestBuilder = client.prepareSearch("gaterequest");
+        MinAggregationBuilder min = AggregationBuilders.min("min").field("usedTime");
+        MaxAggregationBuilder max = AggregationBuilders.max("max").field("usedTime");
+        AvgAggregationBuilder avg = AggregationBuilders.avg("avg").field("usedTime");
+        
+//        DateHistogramAggregationBuilder dhaBuilder=AggregationBuilders.dateHistogram("agg").field(timeField);    
+        HistogramAggregationBuilder habBuilder= AggregationBuilders.histogram("agg").field(timeField);
+        habBuilder.interval(intervalSecond*1000);
+        AggregationBuilder aggregationBuilder = habBuilder //AggregationBuilders.terms("agg").field(timeField)
+        		.subAggregation(AggregationBuilders.terms("add").field("uri")
+        		.subAggregation(min).subAggregation(max).subAggregation(avg));//);//.size(size)
+        SearchResponse response = requestBuilder.addAggregation(aggregationBuilder).setQuery(rangequerybuilder) //.addSort(sortBuilder)
+                .setExplain(true).execute().actionGet();
+        InternalHistogram agg = response.getAggregations().get("agg");
+        for (InternalHistogram.Bucket bucket : agg.getBuckets()) {
+//        	LOGGER.info(bucket.getKey() + ":" + bucket.getDocCount());
+            Terms tms = bucket.getAggregations().get("add");
+            if(tms!=null){
+                for (Terms.Bucket b1 : tms.getBuckets()) {
+             	   InternalMin minv=b1.getAggregations().get("min");
+             	   InternalMax maxv=b1.getAggregations().get("max");
+             	   InternalAvg avgv=b1.getAggregations().get("avg");
+             	    LOGGER.info(b1.getKey() + ":" + b1.getDocCount()+",min="+minv.getValueAsString()+
+                 		   ",max="+maxv.getValueAsString()+",avg="+avgv.getValueAsString());
+                    UrlRequestStatisticVO v=new UrlRequestStatisticVO();
+                    date=new Date(Math.round((Double)bucket.getKey()));
+                    v.setTime(formatter.format(date));
+                    v.setUri((String)b1.getKey());
+                    v.setCount(b1.getDocCount());
+                    v.setMax(maxv.getValue());
+                    v.setMin(minv.getValue());
+                    v.setAvg(avgv.getValue());
+                    result.add(v);
+                }
+            }
+        }
+        return result;
+    }
 }

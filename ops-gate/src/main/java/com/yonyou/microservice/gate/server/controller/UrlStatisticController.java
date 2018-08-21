@@ -1,5 +1,6 @@
 package com.yonyou.microservice.gate.server.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -36,22 +37,6 @@ public class UrlStatisticController {
 		}else if("second".equals(type)){
 			result= elasticsearchUtil.groupSec(startTime,stopTime,size);
 		}
-//		if(!"null".equals(sortField)){
-//			boolean desc=false;
-//			if(!"asc".equals(order)){
-//				logger.info("--sort desc");
-//				desc=true;
-//			}else {
-//				logger.info("--sort asc");
-//			}
-//			if("time".equals(sortField)){
-//				elasticsearchUtil.compareDate(result,desc);
-//				logger.info("--order by time");
-//			}else{
-//				result=elasticsearchUtil.sort(result, sortField,desc);
-//				logger.info("--order by "+sortField);
-//			}
-//		}
 		this.sort(result, sortField, order);
 		
 		return result;
@@ -94,14 +79,19 @@ public class UrlStatisticController {
 		}else if("second".equals(type)){
 			result= elasticsearchUtil.trafficSec(startTime,stopTime,size);
 		}
-//		if(!"null".equals(sortField)){
-//			boolean desc=false;
-//			if(!"asc".equals(order)){
-//				desc=true;
-//			}
-//			result=elasticsearchUtil.sort(result, sortField,desc);
-//		}
 		this.sort(result, sortField, order);
+		return result;
+    }
+
+	@ResponseBody
+    @RequestMapping(value = "/url/customTraffic", method = RequestMethod.GET)
+    public List<UrlRequestStatisticVO> urlTraffic2(@RequestParam String startTime,
+    		@RequestParam String stopTime,@RequestParam(defaultValue="null") String sortField,
+    		@RequestParam(defaultValue="asc") String order,
+    		@RequestParam(defaultValue="20") int intervalSecond) throws ParseException {
+		List<UrlRequestStatisticVO> result=null;
+		result= elasticsearchUtil.groupByHistogram("startTime",startTime,stopTime,intervalSecond);
+		this.sort(result, sortField, order);//"time"
 		return result;
     }
 }

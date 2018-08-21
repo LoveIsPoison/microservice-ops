@@ -29,7 +29,7 @@ public class RequestLog extends Thread {
      */
     private String esType="external";
     private static RequestLog requestlog = null;
-    private static BlockingQueue<UrlRequestVO> requestQueue = new LinkedBlockingQueue<UrlRequestVO>(1024);
+    private static LinkedBlockingQueueWrapper<UrlRequestVO> requestQueue = new LinkedBlockingQueueWrapper<UrlRequestVO>(4096);
 
 
     public static synchronized RequestLog getInstance() {
@@ -48,7 +48,7 @@ public class RequestLog extends Thread {
 
     public void offerQueue(UrlRequestVO urlRequestVO) {
         try {
-        	requestQueue.offer(urlRequestVO);
+        	requestQueue.offerX(urlRequestVO);
         } catch (Exception e) {
             log.error("请求日志写入失败", e);
         }
@@ -60,7 +60,7 @@ public class RequestLog extends Thread {
         List<UrlRequestVO> bufferedLogList = new ArrayList<UrlRequestVO>(); 
         while (true) {
             try {
-                bufferedLogList.add(requestQueue.take());
+                bufferedLogList.add(requestQueue.takeX());
                 requestQueue.drainTo(bufferedLogList);
                 if (bufferedLogList != null && bufferedLogList.size() > 0) {
                     // 写入日志
