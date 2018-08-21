@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Table(name = "gate_auth_provider")
 public class AuthProvider {
     @Id
-	private int id;
+	private Integer id;
     
     @Column(name="src_url")
 	private String srcUrl;
@@ -20,11 +20,11 @@ public class AuthProvider {
     @Column(name="accept_type")
 	private String acceptType;
     
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

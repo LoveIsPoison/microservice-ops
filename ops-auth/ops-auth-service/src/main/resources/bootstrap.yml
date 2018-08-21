@@ -1,0 +1,18 @@
+eureka:
+    instance:
+        statusPageUrlPath: /info
+        healthCheckUrlPath: /health
+        # docker 部署开启
+        prefer-ip-address: true
+    client:
+        serviceUrl:
+            defaultZone: ${eureka.url:http://10.180.8.208:30834/eureka/}
+            
+spring:
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        serviceId: SERVER-CONFIG
+      name: port,db,redis,gate
+      profile: ${config.profile:dev}

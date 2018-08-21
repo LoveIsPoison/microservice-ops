@@ -4,45 +4,26 @@ spring:
     jackson:
         date-format: yyyy-MM-dd HH:mm:ss
         time-zone: GMT+8
-        default-property-inclusion: non_null
+        default-property-inclusion: NON_NULL
     redis:
       cluster: 
-        nodes: ${redis.cluster.nodes}
-#    redis:
-#        database: 1
-#        host: ${redis.host:10.180.8.220}
-#        pool:
-#            max-active: 20
+        nodes: ${redis.cluster.nodes:10.180.8.209:7002}
+      url: 10.180.8.209
+      port: 7002
     datasource:
-      name: test
-      url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-      username: ${db.yc_base.username:root}
-      password: ${db.yc_base.pwd:password}
-      # 使用druid数据源
-      type: com.alibaba.druid.pool.DruidDataSource
-      driver-class-name: com.mysql.jdbc.Driver
-      filters: stat
-      maxActive: 20
-      initialSize: 1
-      maxWait: 60000
-      minIdle: 1
-      timeBetweenEvictionRunsMillis: 60000
-      minEvictableIdleTimeMillis: 300000
-      validationQuery: select 'x'
-      testWhileIdle: true
-      testOnBorrow: false
-      testOnReturn: false
-      poolPreparedStatements: true
-      maxOpenPreparedStatements: 20
-#    rabbitmq:
-#      host: 10.180.4.221
-#      port: 5672
-#      username: mqadmin
-#      password: Pass1234
+       driverClassName: com.mysql.jdbc.Driver
+       url: jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4
+       username: test
+       password: Pass1q2w
 
 mybatis:
-    basepackage: com.youyou.microservice.auth.server.mapper
-    xmlLocation: classpath:mapper/**/*.xml
+  type-aliases-package: com.youyou.microservice.auth.server.entity
+  mapper-locations:  classpath:mapper/**/*.xml
+  
+mapper: 
+  mappers: tk.mybatis.mapper.common.Mapper
+  not-empty: false
+  identity: MYSQL
 
 server:
     port: ${ops.auth.port:8778} #启动端口
@@ -68,21 +49,6 @@ hystrix:
         isolation:
           thread:
             timeoutInMilliseconds: 5000
-
-#eureka:
-#    instance:
-#        statusPageUrlPath: /info
-#        healthCheckUrlPath: /health
-#        # docker 部署开启
-#        prefer-ip-address: true
-##        ip-address: 127.0.0.1
-#    client:
-#        serviceUrl:
-#            defaultZone: ${eureka.url:http://dce.carapptest.gtmc.com.cn:31432/eureka/}
-#                    # docker 部署开启
-##            defaultZone: http://center:8761/eureka/
-
-
 jwt:
   token-header: Authorization
   expire: ${jwt.yc_base.expire:2592000}
@@ -104,22 +70,9 @@ client:
 track:
   isTacks: true 
   LoggingUrl: /home/yonyou/logs/track.log
-
-redis:
-  hostName: ${redis.yc_base.ip:10.180.8.200}
-  port: ${redis.yc_base.port:32044}
-  password: ${redis.yc_base.password:}
-  timeout: ${redis.yc_base.timeout:10000}
-  testWhileIdle: true 
-  maxIdle: ${redis.yc_base.maxIdle:300}  
-  maxTotal: ${redis.yc_base.maxTotal:1000}  
-  maxWaitMillis: ${redis.yc_base.maxWaitMillis:1000}  
-  minEvictableIdleTimeMillis: ${redis.yc_base.minEvictableIdleTimeMillis:300000}  
-  numTestsPerEvictionRun: ${redis.yc_base.numTestsPerEvictionRun:1024}  
-  timeBetweenEvictionRunsMillis: ${redis.yc_base.timeBetweenEvictionRunsMillis:30000}  
-  testOnBorrow: ${redis.yc_base.testOnBorrow:true}  
-  expire: 2592000 
 auth:
   user:
     pub-key:
       path: jwt/pub.key
+redis: 
+  expire: 2592000

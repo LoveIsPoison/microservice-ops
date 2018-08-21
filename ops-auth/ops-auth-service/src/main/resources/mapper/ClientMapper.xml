@@ -2,9 +2,6 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.youyou.microservice.auth.server.mapper.ClientMapper" >
   <resultMap id="BaseResultMap" type="com.youyou.microservice.auth.server.entity.Client" >
-    <!--
-      WARNING - @mbg.generated
-    -->
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="code" property="code" jdbcType="VARCHAR" />
     <result column="secret" property="secret" jdbcType="VARCHAR" />
@@ -29,7 +26,7 @@
     <result column="attr8" property="attr8" jdbcType="VARCHAR" />
   </resultMap>
 
-  <select id="selectAllowedClient" resultType="java.lang.String">
+ <!--  <select id="selectAllowedClient" resultType="java.lang.String">
     SELECT
         client.CODE
       FROM
@@ -37,5 +34,5 @@
       INNER JOIN gate_client_service gcs ON gcs.client_id = client.id
     WHERE
         gcs.service_id = #{serviceId}
-  </select>
+  </select> -->
 </mapper>
