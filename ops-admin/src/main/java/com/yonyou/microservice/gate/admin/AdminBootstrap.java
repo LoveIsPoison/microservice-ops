@@ -1,13 +1,13 @@
 package com.yonyou.microservice.gate.admin;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.ServletComponentScan;
-import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
-import org.springframework.cloud.netflix.feign.EnableFeignClients;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yonyou.microservice.auth.client.EnableAceAuthClient;
 import com.yonyou.microservice.auth.client.annotation.IgnoreClientToken;
 import com.yonyou.microservice.auth.client.annotation.IgnoreUserToken;
+
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * ${DESCRIPTION}
@@ -33,6 +35,8 @@ import com.yonyou.microservice.auth.client.annotation.IgnoreUserToken;
 @IgnoreUserToken
 @IgnoreClientToken
 @EnableDiscoveryClient
+@EnableAutoConfiguration
+@MapperScan("com.yonyou.microservice.gate.admin.mapper")
 public class AdminBootstrap {
     public static void main(String[] args) {
 //    	String password = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode("wys");

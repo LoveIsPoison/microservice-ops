@@ -1,25 +1,19 @@
 package com.yonyou.microservice.gate.admin.config;
 
-import static com.google.common.base.Predicates.or;
-import static springfox.documentation.builders.PathSelectors.regex;
-
-import org.springframework.boot.bind.RelaxedPropertyResolver;
-import org.springframework.context.EnvironmentAware;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
-import org.springframework.web.context.request.async.DeferredResult;
-
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Contact;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
-import springfox.documentation.service.Contact;
 
 /**
  * swagger配置项
@@ -31,11 +25,15 @@ import springfox.documentation.service.Contact;
  */
 @Configuration
 @EnableSwagger2
-public class SwaggerConfiguration extends WebMvcConfigurerAdapter implements EnvironmentAware {
+public class SwaggerConfiguration extends WebMvcConfigurerAdapter {
+	@Value("${swagger.basepackage}")
 	private String basePackage;
+	@Value("${swagger.service.developer}")
 	private String creatName;
+	@Value("${swagger.service.name}")
 	private String serviceName;
-	private RelaxedPropertyResolver propertyResolver;
+//	private RelaxedPropertyResolver propertyResolver;
+	@Value("${swagger.service.description}")
 	private String description;
 	/**
 	 * 这个地方要重新注入一下资源文件，不然不会注入资源的，也没有注入requestHandlerMappping,相当于xml配置的
@@ -71,12 +69,4 @@ public class SwaggerConfiguration extends WebMvcConfigurerAdapter implements Env
 				.contact(contact).version("1.0").build();
 	}
 
-	@Override
-	public void setEnvironment(Environment environment) {
-		this.propertyResolver = new RelaxedPropertyResolver(environment, null);
-		this.basePackage = propertyResolver.getProperty("swagger.basepackage");
-		this.creatName = propertyResolver.getProperty("swagger.service.developer");
-		this.serviceName = propertyResolver.getProperty("swagger.service.name");
-		this.description = propertyResolver.getProperty("swagger.service.description");
-	}
 }
