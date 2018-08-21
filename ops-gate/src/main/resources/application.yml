@@ -122,7 +122,7 @@ auth:
     pub-key:
       path: client/pub.key
 
-redis:
+redis: 
   expire: ${redis.yc_base.expire:2592000} #2592000 30天
 mybatis:
   type-aliases-package: com.yonyou.cloud.zuul.db.entity
