@@ -145,7 +145,7 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>ops-auth-client</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
+			<version>1.0.0</version>
 		</dependency>
 		
 		<dependency>
@@ -171,7 +171,7 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>datasource-hikaricp-starter</artifactId>
-			<version>1.1.0</version>
+			<version>1.1.1</version>
 		</dependency>
 	</dependencies>
 
