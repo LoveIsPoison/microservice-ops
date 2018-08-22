@@ -10,6 +10,6 @@ RUN chmod -R 777 /agent
 
 WORKDIR /usr/src/myapp/
 
-EXPOSE 9002
+EXPOSE 9001
 
 CMD /agent/env.sh run
