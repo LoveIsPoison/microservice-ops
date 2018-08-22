@@ -26,8 +26,8 @@
 	<modules>
         <module>ops-admin</module>
         <module>ops-gate</module>
-        <module>ops-common</module>
         <module>ops-auth</module>
+        <module>ops-common</module>
         <module>ops-support</module>
         <module>ops-server</module>
     </modules>
