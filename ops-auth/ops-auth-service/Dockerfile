@@ -1,11 +1,15 @@
-FROM 10.180.8.226/yonyou-dev/jdk:1.8
+FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:v0.2
 
 RUN mkdir -p /usr/src/myapp
 
-COPY target/ops-auth.jar /usr/src/myapp/ops-auth.jar
+COPY ./target/ops-auth.jar /usr/src/myapp/ops-auth.jar
+
+COPY env.sh /agent/env.sh
+
+RUN chmod -R 777 /agent
 
 WORKDIR /usr/src/myapp/
 
-EXPOSE 9001
+EXPOSE 9002
 
-ENTRYPOINT java -jar ops-auth.jar
+CMD /agent/env.sh run
