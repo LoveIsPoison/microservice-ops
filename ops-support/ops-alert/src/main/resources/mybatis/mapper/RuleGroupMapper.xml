@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yonyou.cloud.ops.alert.ops.alert.mapper.RuleGroupMapper">
+	<resultMap id="BaseResultMap"
+		type="com.yonyou.cloud.ops.alert.ops.alert.entity.RuleGroup">
+		<!-- WARNING - @mbg.generated -->
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="descr" jdbcType="VARCHAR" property="descr" />
+
+		<result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+		<result column="mail_title" jdbcType="VARCHAR" property="mailTitle" />
+		<result column="mail_content" jdbcType="VARCHAR" property="mailContent" />
+		<result column="status" jdbcType="TINYINT" property="status" />
+
+	</resultMap>
+
+	<insert id="insertRuleGroup" useGeneratedKeys="true"
+		keyProperty="id" parameterType="com.yonyou.cloud.ops.alert.ops.alert.entity.RuleGroup">
+		INSERT INTO rule_group (
+		name,
+		descr,
+		alarm_type,
+		mail_title,
+		mail_content,
+		status
+		)
+		VALUES
+		(
+		#{name},
+		#{descr},
+		#{alarmType},
+		#{mailTitle},
+		#{mailContent},
+		#{status}
+
+		)
+	</insert>
+
+
+
+	<resultMap id="BaseResultMap1"
+		type="com.yonyou.cloud.ops.alert.ops.alert.domain.dto.RuleGroupBo">
+		<id column="group_id" jdbcType="INTEGER" property="ruleGroupId" />
+		<result column="group_name" jdbcType="VARCHAR" property="ruleGroupName" />
+		<result column="group_status" jdbcType="TINYINT" property="ruleGroupStatus" />
+		
+		<result column="descr" jdbcType="VARCHAR" property="descr" />
+		<result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+		<result column="mail_title" jdbcType="VARCHAR" property="mailTitle" />
+		<result column="mail_content" jdbcType="VARCHAR" property="mailContent" />  
+		
+		<collection  property="rules" ofType="com.yonyou.cloud.ops.alert.ops.alert.entity.RuleInfo">
+			<id column="id" property="id" jdbcType="INTEGER" />
+			<result column="name" jdbcType="VARCHAR" property="name" />
+			<result column="rule_desc" property="ruleDesc" jdbcType="VARCHAR" />
+			<result column="keyword" property="keyword" jdbcType="VARCHAR" />
+			<result column="time" property="time" jdbcType="INTEGER" />
+			<result column="count" property="count" jdbcType="INTEGER" />
+			<result column="status" property="status" jdbcType="TINYINT" />
+			<!-- <result column="group_id" property="groupId" jdbcType="INTEGER" /> -->
+		</collection >
+		
+<!-- 		<collection  property="ruleScopes" ofType="com.yonyou.cloud.ops.alert.ops.alert.entity.RuleScope">
+			 <id column="scopeid" property="id" jdbcType="INTEGER" />
+		    <result column="type" property="type" jdbcType="VARCHAR" />
+		    <result column="ip_app" property="ipApp" jdbcType="VARCHAR" /> 
+		</collection > -->
+	</resultMap>
+	<select id="selectBySearchForm" resultMap="BaseResultMap1" parameterType="com.yonyou.cloud.ops.alert.ops.alert.domain.dto.RuleGroupSearchForm" >
+		SELECT
+		 rg.id as group_id,rg.name as group_name,rg.status as group_status,rg.descr,rg.alarm_type,rg.mail_title,rg.mail_content,ri.*
+		 <!-- rc.id as scopeid,rc.ip_app -->
+		FROM
+		 rule_group rg left join rule_info ri 
+		on
+		ri.group_id = rg.id 
+		<!-- left join rule_scope rc on rg.id=rc.group_id -->
+		where 1=1
+		<if test="null != ruleName  and  '' != ruleName  ">
+			AND ri.name like CONCAT(CONCAT('%',#{ruleName},'%'))
+		</if>
+		<if test="groupName !=null and groupName !='' ">
+			AND rg.name like CONCAT(CONCAT('%',#{groupName},'%'))
+		</if>
+		<if test="keyword !=null and keyword !='' ">
+			AND ri.keyword like CONCAT(CONCAT('%',#{keyword},'%'))
+		</if>
+		<if test="status !=null and status !='' ">
+			AND rg.status=#{status}
+		</if>
+		<if test="ruleGroupId!=null and ruleGroupId!=''">
+			AND rg.id=#{ruleGroupId}
+		</if>
+		order by rg.id DESC
+	</select>
+	
+	<select id="getAll" resultMap="BaseResultMap">
+        select * from rule_group
+    </select>
+</mapper>

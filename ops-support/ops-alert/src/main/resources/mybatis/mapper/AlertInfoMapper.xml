@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yonyou.cloud.ops.alert.ops.alert.mapper.AlertInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.yonyou.cloud.ops.alert.ops.alert.entity.AlertInfo">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="alert_detail" jdbcType="VARCHAR" property="alertDetail" />
+		<result column="group_id" jdbcType="INTEGER" property="groupId" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="app_name" jdbcType="VARCHAR" property="appName" />
+		<result column="alert_desc" jdbcType="VARCHAR" property="alertDesc" />
+	</resultMap>
+
+	<select id="selectAlert" resultMap="selectBaseResultMap">
+		SELECT
+		rg.name as group_name,rg.descr,at.alert_detail,at.status ,at.group_id,at.id FROM alert_info
+		at,rule_group rg WHERE at.group_id=rg.id and rg.status=#{status}
+	</select>
+	
+	<resultMap id="selectBaseResultMap" type="com.yonyou.cloud.ops.alert.ops.alert.entity.AlertInfo"> 
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="alert_detail" jdbcType="VARCHAR" property="alertDetail" />
+		<result column="group_id" jdbcType="INTEGER" property="groupId" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="group_name" jdbcType="VARCHAR" property="groupName" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="alert_desc" jdbcType="VARCHAR" property="alertDesc" />
+	</resultMap>
+	
+  <resultMap id="selectBOResultMap" type="com.yonyou.cloud.ops.alert.ops.alert.domain.dto.AlertInfoBo"> 
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="alert_detail" jdbcType="VARCHAR" property="alertDetail" />
+		<result column="group_id" jdbcType="INTEGER" property="groupId" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="group_name" jdbcType="VARCHAR" property="groupName" />
+		<result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+		<result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+		<result column="update_user" jdbcType="VARCHAR" property="updateUser" />
+		<result column="mail_title" jdbcType="VARCHAR" property="mailTitle" />
+		<result column="mail_content" jdbcType="VARCHAR" property="mailContent" />
+	    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+	    <result column="alert_desc" jdbcType="VARCHAR" property="alertDesc" />
+	     
+	</resultMap>  
+  
+  	<select id="selectAlertBO"  parameterType="com.yonyou.cloud.ops.alert.ops.alert.domain.dto.AlertInfoSearchForm" resultMap="selectBOResultMap">
+		SELECT at.alert_desc,at.app_name, rg.name as group_name,at.alert_detail,at.status ,at.group_id,at.id ,at.create_date,at.update_date,at.update_user ,rg.mail_title,rg.mail_content FROM alert_info
+		at,rule_group rg WHERE at.group_id=rg.id 
+		<if test="status!=null and status!=''">
+			and at.status=#{status,jdbcType=VARCHAR}
+		</if>
+		<if test="groupName!=null and groupName!=''">
+			and rg.name like CONCAT(CONCAT('%',#{groupName},'%'))
+		</if>
+		<if test="appName!=null and appName!=''">
+			and at.app_name like CONCAT(CONCAT('%',#{appName},'%'))
+		</if>
+		
+		<if test="startDate!=null and startDate!=''">
+			and  at.create_date  <![CDATA[>=]]>  #{startDate, jdbcType=TIMESTAMP} 
+		</if>
+		<if test="endDate!=null and endDate!=''">
+			and at.create_date  <![CDATA[<=]]>   #{endDate, jdbcType=TIMESTAMP}  
+		</if>  
+		    order by at.id DESC
+	</select>
+</mapper>

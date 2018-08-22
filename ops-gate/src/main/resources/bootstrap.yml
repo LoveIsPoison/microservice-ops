@@ -14,7 +14,9 @@ eureka:
         prefer-ip-address: true
     client:
         serviceUrl:
-            defaultZone: ${eureka.url:http://10.180.8.208:30834/eureka/}
+            defaultZone: ${eureka.url:http://10.180.8.208:31057/eureka/}
+                    # docker 部署开启
+#            defaultZone: http://center:8761/eureka/
 
 #请求和响应GZIP压缩支持
 feign:

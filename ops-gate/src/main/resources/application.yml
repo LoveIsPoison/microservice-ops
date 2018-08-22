@@ -10,18 +10,25 @@ spring:
         default-property-inclusion: NON_NULL
     redis:
       cluster: 
-        nodes: ${redis.cluster.nodes:10.180.8.209:7002}
+        nodes: 10.180.8.209:7002
       url: 10.180.8.209
       port: 7002
+        
     datasource:
        driverClassName: com.mysql.jdbc.Driver
-       url: jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4
-       username: test
-       password: Pass1q2w
+       url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+       username: ${db.yc_base.username:test}
+       password: ${db.yc_base.pwd:Pass1q2w}
+    data:
+      elasticsearch:
+         repositories:
+           enabled: true
+         cluster-nodes: 10.180.8.203:9200
+         cluster-name: es
     servlet:
-      multipart:
-        max-file-size: 10Mb
-        max-request-size: 10Mb
+       multipart:
+          max-file-size: 10Mb
+          max-request-size: 10Mb
 server:
     port: ${ops.gate.port:9003} #启动端口
     
@@ -78,12 +85,20 @@ zuul:
   store:
     mysql:
       enabled: true
-      
+  db:
+    name: test
+    url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    username: ${db.yc_base.username:test}
+    password: ${db.yc_base.pwd:Pass1q2w}
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    basepackage: com.yonyou.cloud.zuul.db.mapper
+    xmlLocation: classpath:mapper/**/*.xml
 ribbon:
   eureka:
     enabled: true
-  ReadTimeout: 60000
-  ConnectTimeout: 60000
+  ReadTimeout: 1000
+  ConnectTimeout: 1000
   MaxAutoRetries: 0
   MaxAutoRetriesNextServer: 1
   OkToRetryOnAllOperations: false
@@ -99,7 +114,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 50000
+            timeoutInMilliseconds: 1000
 
 gate:
   ignore:
@@ -122,8 +137,7 @@ auth:
     pub-key:
       path: client/pub.key
 
-redis: 
-  expire: ${redis.yc_base.expire:2592000} #2592000 30天
+
 mybatis:
   type-aliases-package: com.yonyou.cloud.zuul.db.entity
   mapper-locations: classpath:zuul/mapper/*.xml
@@ -131,3 +145,44 @@ mapper:
   mappers: tk.mybatis.mapper.common.Mapper
   not-empty: false
   identity: MYSQL
+
+#jwt:
+#  params: openid  #demo:openid,test
+groovy:
+  filter:
+    path: ${groovy.path:D:\\Del\\groovy\\}
+    interval: ${groovy.interval:60}
+  db:
+    name: test
+    url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    username: ${db.yc_base.username:test}
+    password: ${db.yc_base.pwd:Pass1q2w}
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.jdbc.Driver
+    basepackage: com.yonyou.microservice.filter.mapper
+    xmlLocation: classpath:mapper/**/*.xml
+redis:
+  hostName: ${redis.yc_base.ip:10.180.8.200}
+  port: ${redis.yc_base.port:32044}
+  password: ${redis.yc_base.password:}
+  timeout: ${redis.yc_base.timeout:10000}
+  testWhileIdle: true 
+  maxIdle: ${redis.yc_base.maxIdle:300}  
+  maxTotal: ${redis.yc_base.maxTotal:1000}  
+  maxWaitMillis: ${redis.yc_base.maxWaitMillis:1000}  
+  minEvictableIdleTimeMillis: ${redis.yc_base.minEvictableIdleTimeMillis:300000}  
+  numTestsPerEvictionRun: ${redis.yc_base.numTestsPerEvictionRun:1024}  
+  timeBetweenEvictionRunsMillis: ${redis.yc_base.timeBetweenEvictionRunsMillis:30000}  
+  testOnBorrow: ${redis.yc_base.testOnBorrow:true}  
+  expire: ${redis.yc_base.expire:2592000} #2592000
+
+#url:
+#  statistic:
+#    historySize: ${statistic.historySize:10}
+#    interval: ${statistic.interval:60000} #1 * 60 * 1000
+elasticsearch:
+  ip: 10.180.8.203
+  port: 9300
+  pool: 5
+  cluster:
+    name: es6.2
