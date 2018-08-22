@@ -87,5 +87,31 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
+	
+	<distributionManagement>
+<!-- 		<repository>
+			<id>nexus-releases</id>
+			<name>Releases name</name>
+			<url>http://210.13.111.26:10160/nexus/content/repositories/releases/</url>
+		</repository>
+		<snapshotRepository>
+			<id>nexus-snapshots</id>
+			<name>snapshots name</name>
+			<url>http://210.13.111.26:10160/nexus/content/repositories/snapshots/</url>
+		</snapshotRepository> -->
+		
+		<!-- <snapshotRepository>
+	        <id>nexus-snapshots</id>
+	        <name>user snapshot</name>
+	        <url>http://dce.carapptest.gtmc.com.cn:32081/repository/maven-snapshots/</url>
+	    </snapshotRepository> -->
+	    
+	    <snapshotRepository>
+	        <id>nexus-snapshots</id>
+	        <name>user snapshot</name>
+	        <url>http://10.180.8.208:32000/repository/maven-snapshots/</url>
+	    </snapshotRepository>
+	    
+	</distributionManagement>
 
 </project>

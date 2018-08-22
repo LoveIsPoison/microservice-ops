@@ -1,22 +1,8 @@
 package com.yonyou.microservice.gate.common.context;
 
-import static org.junit.Assert.assertEquals;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.LinkedBlockingQueue;
-import java.util.concurrent.ThreadFactory;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.yonyou.cloud.common.jwt.StringHelper;
 import com.yonyou.microservice.gate.common.constant.CommonConstants;
 
@@ -87,48 +73,4 @@ public class BaseContextHandler {
         threadLocal.remove();
     }
 
-    @RunWith(MockitoJUnitRunner.class)
-    public static class UnitTest {
-        private Logger logger = LoggerFactory.getLogger(UnitTest.class);
-
-        @Test
-        public void testSetContextVariable() throws InterruptedException {
-            BaseContextHandler.set("test", "main");
-            ThreadFactory namedThreadFactory = new ThreadFactoryBuilder()
-                    .setNameFormat("baseContextHandler-pool-%d").build();
-            ExecutorService singleThreadPool = new ThreadPoolExecutor(10, 10,
-                    0L, TimeUnit.MILLISECONDS,
-                    new LinkedBlockingQueue<Runnable>(1024), namedThreadFactory, new ThreadPoolExecutor.AbortPolicy());
-
-            singleThreadPool.execute(()->{
-                    BaseContextHandler.set("test", "moo");
-
-                    try {
-                        Thread.currentThread().sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    assertEquals(BaseContextHandler.get("test"), "moo");
-                    logger.info("thread one done!");
-                });
-            singleThreadPool.execute(()->{
-                    BaseContextHandler.set("test", "moo2");
-                    assertEquals(BaseContextHandler.get("test"), "moo2");
-                    logger.info("thread two done!");
-                });
-            singleThreadPool.shutdown();   
-
-            Thread.currentThread().sleep(5000);
-            assertEquals(BaseContextHandler.get("test"), "main");
-            logger.info("main one done!");
-        }
-
-        @Test
-        public void testSetUserInfo(){
-            BaseContextHandler.setUserID("test");
-            assertEquals(BaseContextHandler.getUserID(), "test");
-            BaseContextHandler.setUsername("test2");
-            assertEquals(BaseContextHandler.getUsername(), "test2");
-        }
-    }
 }
