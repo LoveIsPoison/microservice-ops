@@ -26,6 +26,7 @@ import com.yonyou.microservice.gate.ratelimit.config.IUserPrincipal;
 import com.yonyou.microservice.gate.ratelimit.config.properties.RateLimitProperties;
 import com.yonyou.microservice.gate.server.config.UserPrincipal;
 import com.yonyou.microservice.gate.server.utils.DbLog;
+import com.yonyou.microservice.gate.server.utils.RequestLog;
 
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -56,6 +57,8 @@ public class GateBootstrap {
     public static void main(String[] args) throws ParseException, UnsupportedEncodingException {
         DbLog.getInstance().start();
         SpringApplication.run(GateBootstrap.class, args);
+		RequestLog.getInstance().start();
+		System.out.println("-----------GateBootstrap end");
     }
 
     @Bean
