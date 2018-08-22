@@ -70,12 +70,16 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.spring4all</groupId>
 			<artifactId>spring-boot-starter-swagger</artifactId>
 			<version>1.5.1.RELEASE</version>
+		</dependency> -->
+		<dependency>
+			<groupId>com.spring4all</groupId>
+			<artifactId>swagger-spring-boot-starter</artifactId>
+			<version>1.7.1.RELEASE</version>
 		</dependency>
-
 
 		<!-- 通用mapper -->
 		<dependency>
@@ -113,9 +117,14 @@
 			<artifactId>mybatis-spring</artifactId> <version>${mybatis.spring.version}</version> 
 			</dependency> -->
 
-		<!-- Mybatis Generator <dependency> <groupId>org.mybatis.generator</groupId> 
-			<artifactId>mybatis-generator-core</artifactId> <version>1.3.2</version> 
-			<scope>compile</scope> <optional>true</optional> </dependency> -->
+		<!-- Mybatis Generator -->
+		<dependency>
+			<groupId>org.mybatis.generator</groupId>
+			<artifactId>mybatis-generator-core</artifactId>
+			<version>1.3.2</version>
+			<scope>compile</scope>
+			<optional>true</optional>
+		</dependency>
 		<!--分页插件 <dependency> <groupId>com.github.pagehelper</groupId> <artifactId>pagehelper</artifactId> 
 			<version>${pagehelper.version}</version> </dependency> -->
 		<!--通用Mapper <dependency> <groupId>tk.mybatis</groupId> <artifactId>mapper</artifactId> 
@@ -159,10 +168,10 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-sleuth-zipkin-stream</artifactId>
         </dependency> -->
-        <dependency>
+        <!-- <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
-        </dependency>
+        </dependency> -->
 
         <dependency>
             <groupId>org.springframework.cloud</groupId>

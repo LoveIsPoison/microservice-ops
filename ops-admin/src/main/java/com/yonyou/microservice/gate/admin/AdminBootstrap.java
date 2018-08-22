@@ -12,6 +12,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.spring4all.swagger.EnableSwagger2Doc;
 import com.yonyou.microservice.auth.client.EnableAceAuthClient;
 import com.yonyou.microservice.auth.client.annotation.IgnoreClientToken;
 import com.yonyou.microservice.auth.client.annotation.IgnoreUserToken;
@@ -37,6 +38,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @EnableDiscoveryClient
 @EnableAutoConfiguration
 @MapperScan("com.yonyou.microservice.gate.admin.mapper")
+@EnableSwagger2Doc
 public class AdminBootstrap {
     public static void main(String[] args) {
 //    	String password = new BCryptPasswordEncoder(UserConstant.PW_ENCORDER_SALT).encode("wys");

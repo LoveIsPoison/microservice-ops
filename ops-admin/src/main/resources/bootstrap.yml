@@ -1,0 +1,17 @@
+spring:
+  cloud:
+    config:
+      discovery:
+        serviceId: server-config
+        enabled: true
+      profile: ${config.profile:dev}
+      name: port,db,mq
+management:
+  security:
+    enabled: false
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    serviceUrl:
+      defaultZone: ${eureka.url:http://10.180.8.208:30834/eureka/} 

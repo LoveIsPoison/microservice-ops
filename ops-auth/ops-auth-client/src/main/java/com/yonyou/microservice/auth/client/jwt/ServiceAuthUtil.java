@@ -51,7 +51,7 @@ public class ServiceAuthUtil {
 
     @Scheduled(cron = "0 0/5 * * * ?")
     public void refreshAllowedClient() {
-        log.info("refresh allowedClient.....");
+//        log.info("refresh allowedClient.....");
         RestResultResponse resp = serviceAuthFeign.getAllowedClient(serviceAuthConfig.getClientId(), serviceAuthConfig.getClientSecret());
         if (resp.getResultCode() == HTTP_OK) {
         	RestResultResponse<List<String>> allowedClient = (RestResultResponse<List<String>>) resp;
@@ -62,7 +62,7 @@ public class ServiceAuthUtil {
 
     @Scheduled(cron = "0 0 0/1 * * ?")
     public void refreshClientToken() {
-        log.info("refresh client token.....");
+//        log.info("refresh client token.....");
         RestResultResponse resp = serviceAuthFeign.getAccessToken(serviceAuthConfig.getClientId(), serviceAuthConfig.getClientSecret());
         if (resp.getResultCode() == HTTP_OK) {
         	RestResultResponse<String> clientToken = (RestResultResponse<String>) resp;

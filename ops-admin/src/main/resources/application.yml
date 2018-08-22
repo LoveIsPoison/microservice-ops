@@ -31,12 +31,12 @@ spring:
 #        poolPreparedStatements: true
 #        maxOpenPreparedStatements: 20
   
-    rabbitmq:
-        host: ${rabbitmq.host:10.180.8.200}
-        port : ${rabbitmq.port:32002}
-        username: ${rabbitmq.username:rabbituser}
-        password: ${rabbitmq.password:123456}
-        virtual-host: ${rabbitmq.vhost:/}
+#    rabbitmq:
+#        host: ${rabbitmq.host:10.180.8.200}
+#        port : ${rabbitmq.port:32002}
+#        username: ${rabbitmq.username:rabbituser}
+#        password: ${rabbitmq.password:123456}
+#        virtual-host: ${rabbitmq.vhost:/}
         
 # 配置zipKin Server的地址
 #    zipkin:
