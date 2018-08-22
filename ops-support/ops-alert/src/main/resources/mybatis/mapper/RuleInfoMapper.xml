@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.cloud.ops.alert.ops.alert.mapper.RuleInfoMapper">
+	<resultMap id="BaseResultMap"
+		type="com.yonyou.cloud.ops.alert.ops.alert.entity.RuleInfo">
+		<!-- WARNING - @mbg.generated -->
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="rule_desc" property="ruleDesc" jdbcType="VARCHAR" />
+		<result column="keyword" property="keyword" jdbcType="VARCHAR" />
+		<result column="time" property="time" jdbcType="INTEGER" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="group_id" property="groupId" jdbcType="INTEGER" />
+		 <association property="ruleGroup" javaType="com.yonyou.cloud.ops.alert.ops.alert.entity.RuleGroup">
+             <id column="id" jdbcType="INTEGER" property="id" />
+			<result column="name" jdbcType="VARCHAR" property="name" />
+			<result column="descr" jdbcType="VARCHAR" property="descr" />
+         </association>
+	</resultMap>
+	
+	<select id="selectRuleInfoByAppOrIp" resultMap="BaseResultMap">
+		SELECT
+				*
+			FROM
+				rule_info
+			WHERE
+				group_id IN (
+					SELECT
+						rg.id
+					FROM
+						rule_scope rs
+					LEFT JOIN rule_group rg ON rg.id = rs.group_id
+					WHERE
+						rg. STATUS = 1
+					AND (
+						rs.ip_app = #{appName}
+						OR rs.ip_app = #{hostIp}
+					)
+				);
+	</select>
+	
+	<select id="selectRuleInfoAll" resultMap="BaseResultMap">
+		SELECT
+			*
+			FROM
+				rule_info ri,
+				rule_group rg
+			WHERE
+				ri.group_id = rg.id
+				
+				<if test="null != ruleName  and  '' != ruleName  ">
+				AND ri.name = #{ruleName} 
+				</if>
+				<if test="groupName !=null and groupName !='' ">
+				 AND rg.name =#{groupName} 
+				</if>
+				<if test="keyword !=null and keyword !='' ">
+					AND  ri.keyword = #{keyword}  
+				</if> 
+					  
+	</select>
+</mapper>

@@ -1,0 +1,8 @@
+FROM 172.16.199.203/daocloud/maven:latest
+
+
+WORKDIR /project
+
+ADD . /project
+
+RUN  mvn clean package -Dmaven.test.skip=true

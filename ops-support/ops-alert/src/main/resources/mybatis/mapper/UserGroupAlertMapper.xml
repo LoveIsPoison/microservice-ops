@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.cloud.ops.alert.ops.alert.mapper.UserGroupAlertMapper" >
+  <resultMap id="BaseResultMap" type="com.yonyou.cloud.ops.alert.ops.alert.entity.UserGroupAlert" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_group_id" property="userGroupId" jdbcType="INTEGER" />
+    <result column="rule_group__id" property="ruleGroupId" jdbcType="INTEGER" />
+  </resultMap>
+</mapper>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yonyou.cloud.ops.alert.ops.alert.mapper.UserInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yonyou.cloud.ops.alert.ops.alert.entity.UserInfo" >
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="ruleGroupId" property="ruleGroupId" jdbcType="INTEGER" />
+  </resultMap>
+  
+  	<select id="selectUserByRuleGroup" resultMap="BaseResultMap">
+		SELECT
+				*
+			FROM
+				user_info,
+				user_group_member
+			WHERE
+			    user_info.id=user_group_member.user_id AND
+				user_group_member.group_id IN (
+					SELECT
+						user_group_id
+					FROM
+						user_group_alert
+					WHERE
+						user_group_alert.rule_group__id = #{ruleGroupId}
+				)
+	</select> 
+</mapper>
