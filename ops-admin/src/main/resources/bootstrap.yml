@@ -2,13 +2,11 @@ spring:
   cloud:
     config:
       discovery:
-        serviceId: server-config
+        serviceId: SERVER-CONFIG
         enabled: true
       profile: ${config.profile:dev}
       name: port,db,mq
-management:
-  security:
-    enabled: false
+
 eureka:
   instance:
     prefer-ip-address: true
