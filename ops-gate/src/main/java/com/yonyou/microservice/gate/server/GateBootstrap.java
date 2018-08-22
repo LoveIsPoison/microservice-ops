@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -27,14 +27,11 @@ import com.yonyou.microservice.gate.ratelimit.config.properties.RateLimitPropert
 import com.yonyou.microservice.gate.server.config.UserPrincipal;
 import com.yonyou.microservice.gate.server.utils.DbLog;
 import com.yonyou.microservice.gate.server.utils.RequestLog;
-
-import tk.mybatis.spring.annotation.MapperScan;
-
 /**
  * @author joy
  */
 @SpringBootApplication
-@EnableDiscoveryClient
+@EnableEurekaClient
 @EnableFeignClients({"com.yonyou.microservice.auth.client.feign","com.yonyou.microservice.gate.server.feign"})
 @EnableZuulProxyStore
 @ComponentScan(basePackages = {"com.yonyou.cloud.zuul.db","com.yonyou.microservice.gate.server"})
