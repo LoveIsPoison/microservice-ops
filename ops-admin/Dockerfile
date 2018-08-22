@@ -1,11 +1,15 @@
-FROM 10.180.4.226/yonyou-dev/jdk-skagent:0.3
+FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:v0.2
 
 RUN mkdir -p /usr/src/myapp
 
 COPY ./target/ops-admin.jar /usr/src/myapp/ops-admin.jar
 
+COPY env.sh /agent/env.sh
+
+RUN chmod -R 777 /agent
+
 WORKDIR /usr/src/myapp/
 
 EXPOSE 9002
 
-ENTRYPOINT java -javaagent:/agent/skywalking-agent.jar  -jar ops-admin.jar
+CMD /agent/env.sh run
