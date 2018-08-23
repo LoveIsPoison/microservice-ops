@@ -1,0 +1,29 @@
+---
+connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+endpoints:
+  restart:
+    enabled: true
+minIdle: 1
+validationQuery: SELECT 1 FROM DUAL
+initialSize: 5
+maxWait: 60000
+filters: stat,wall,log4j
+poolPreparedStatements: true
+spring:
+  application:
+    name: ops-task
+maxPoolPreparedStatementPerConnectionSize: 50
+testOnBorrow: false
+testWhileIdle: true
+removeAbandoned: true
+minEvictableIdleTimeMillis: 300000
+timeBetweenEvictionRunsMillis: 60000
+testOnReturn: false
+removeAbandonedTimeout: 180
+mysql:
+  task:
+    password: ${db.task.password:Pass1q2w}
+    url: jdbc:mysql://10.180.8.203:3306/yc_taskcenter?useUnicode=true&amp;characterEncoding=utf8mb4
+    username: ${db.task.username:test}
+  driverClassName: com.mysql.jdbc.Driver
+maxActive: 10
