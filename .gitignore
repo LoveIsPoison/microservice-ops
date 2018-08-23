@@ -26,3 +26,10 @@ hs_err_pid*
 .project
 .settings/
 *.springBeans
+ops-support/ops-mq/bin/.gitignore
+ops-support/ops-mq/bin/.mvn/wrapper/maven-wrapper.jar
+ops-support/ops-mq/bin/.mvn/wrapper/maven-wrapper.properties
+ops-support/ops-mq/bin/mvnw
+ops-support/ops-mq/bin/mvnw.cmd
+ops-support/ops-mq/bin/pom.xml
+ops-support/ops-mq/bin/src/main/resources/application.properties
