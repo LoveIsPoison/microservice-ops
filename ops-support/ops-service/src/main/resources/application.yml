@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: ops-service
+server:
+  port: ${ops.service.port:9004}
