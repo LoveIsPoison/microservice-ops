@@ -52,6 +52,7 @@
 		<dependency>
 			<groupId>tk.mybatis</groupId>
 			<artifactId>mapper-spring-boot-starter</artifactId>
+			<version>${mapperStarter.version}</version>
 		</dependency>
 		
 			
@@ -65,6 +66,7 @@
 		<dependency>
 			<groupId>com.github.pagehelper</groupId>
 			<artifactId>pagehelper-spring-boot-starter</artifactId>
+			<version>${pagehelpStarter.version}</version>
 		</dependency>
 
 		<dependency>

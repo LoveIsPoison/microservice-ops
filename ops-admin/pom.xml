@@ -1,10 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.yonyou.cloud</groupId>
 	<artifactId>ops-admin</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
-
 	<parent>
 		<groupId>com.yonyou.cloud</groupId>
 		<artifactId>ops</artifactId>
@@ -12,29 +9,16 @@
 	</parent>
 
 	<properties>
-		<!-- 依赖版本 -->
-		<mapper.version>3.4.0</mapper.version>
-		<mybatis.version>3.3.1</mybatis.version>
-		<mybatis.spring.version>1.2.4</mybatis.spring.version>
-		<pagehelper.version>4.1.1</pagehelper.version>
-		<mapperStarter.version>1.2.4</mapperStarter.version>
-		<pagehelpStarter.version>1.2.3</pagehelpStarter.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
-		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>ops-common</artifactId>
 			<version>0.0.2-SNAPSHOT</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.yonyou.cloud</groupId>
-			<artifactId>common-elegance</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
 		</dependency>
 
 		<dependency>
@@ -69,11 +53,6 @@
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
-		<!-- <dependency>
-			<groupId>com.spring4all</groupId>
-			<artifactId>spring-boot-starter-swagger</artifactId>
-			<version>1.5.1.RELEASE</version>
-		</dependency> -->
 		<dependency>
 			<groupId>com.spring4all</groupId>
 			<artifactId>swagger-spring-boot-starter</artifactId>
@@ -100,22 +79,6 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!--通过starter简化配置 -->
-		<!-- <dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>druid-spring-boot-starter</artifactId>
-			<version>1.1.4</version>
-		</dependency> -->
-
-		<!-- druid <dependency> <groupId>com.alibaba</groupId> <artifactId>druid</artifactId> 
-			<version>1.0.11</version> </dependency> <dependency> <groupId>mysql</groupId> 
-			<artifactId>mysql-connector-java</artifactId> <version>5.1.30</version> </dependency> -->
-
-		<!--Mybatis <dependency> <groupId>org.mybatis</groupId> <artifactId>mybatis</artifactId> 
-			<version>${mybatis.version}</version> </dependency> <dependency> <groupId>org.mybatis</groupId> 
-			<artifactId>mybatis-spring</artifactId> <version>${mybatis.spring.version}</version> 
-			</dependency> -->
-
 		<!-- Mybatis Generator -->
 		<dependency>
 			<groupId>org.mybatis.generator</groupId>
@@ -124,15 +87,12 @@
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
-		<!--分页插件 <dependency> <groupId>com.github.pagehelper</groupId> <artifactId>pagehelper</artifactId> 
-			<version>${pagehelper.version}</version> </dependency> -->
-		<!--通用Mapper <dependency> <groupId>tk.mybatis</groupId> <artifactId>mapper</artifactId> 
-			<version>${mapper.version}</version> </dependency> -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
 			<!-- <version>3.4</version> -->
 		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -161,17 +121,6 @@
 			<artifactId>spring-cloud-starter-config</artifactId>
 		</dependency>
 		
-		
-		
-		<!-- <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin-stream</artifactId>
-        </dependency> -->
-        <!-- <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
-        </dependency> -->
-
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-sleuth</artifactId>
@@ -183,19 +132,6 @@
 		</dependency>
 	</dependencies>
 
-
-<!-- 	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement> -->
-  	
 	<build>
 		<finalName>ops-admin</finalName>
 		<plugins>
