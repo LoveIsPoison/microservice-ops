@@ -17,5 +17,10 @@
         <module>ops-service</module>
         <module>ops-alert</module>
         <module>ops-task</module>
-    </modules>
+  </modules>
+  
+  <properties>
+		<swaggerStarter.version>1.7.1.RELEASE</swaggerStarter.version>
+		<hikaricpStarter.version>1.1.1</hikaricpStarter.version>
+	</properties>
 </project>
