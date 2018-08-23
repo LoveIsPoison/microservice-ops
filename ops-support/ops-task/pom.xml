@@ -32,12 +32,10 @@
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 		<dependency>
 			<groupId>org.quartz-scheduler</groupId>
 			<artifactId>quartz-jobs</artifactId>
-			<version>2.2.1</version>
 		</dependency>
 
 		<!-- dao util -->
@@ -87,7 +85,7 @@
 		<dependency>
 			<groupId>com.spring4all</groupId>
 			<artifactId>swagger-spring-boot-starter</artifactId>
-			<version>${swaggerStarter.version}</version>
+			<version>${swagger-starter.version}</version>
 		</dependency>
 
 		<dependency>
@@ -107,7 +105,7 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>21.0</version>
+			<version>${guava.version}</version>
 		</dependency>
 
 		<dependency>
@@ -150,16 +148,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 </project>

@@ -3,7 +3,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.yonyou.cloud</groupId>
 	<artifactId>ops-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
@@ -25,7 +24,6 @@
 		<!-- XML生成路径 -->
 		<targetResourcesProject>${basedir}/src/main/resources</targetResourcesProject>
 		<targetXMLPackage>mybatis/mapper</targetXMLPackage>
-		<mapper.version>3.3.6</mapper.version>
 	</properties>
 
 	<dependencies>
@@ -60,28 +58,16 @@
 		<dependency>
 			<groupId>com.spring4all</groupId>
 			<artifactId>swagger-spring-boot-starter</artifactId>
-			<version>${swaggerStarter.version}</version>
+			<version>${swagger-starter.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>21.0</version>
+			<version>${guava.version}</version>
 		</dependency>
 		
 		
 	</dependencies>
-
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<finalName>ops-service</finalName>
