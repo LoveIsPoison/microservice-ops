@@ -51,7 +51,7 @@ public class MqDataMongoDbTest {
 			mqMessage.setStatus(MqMessageStatus.PRODUCED.toString());
 			l.add(mqMessage);
 			if((i+1)%1000==0){
-				mqMessageRepository.save(l);
+				mqMessageRepository.saveAll(l);
 				l.clear();
 			}
 		}
