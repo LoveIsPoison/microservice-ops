@@ -17,6 +17,7 @@ public class IgnoreUri {
 	private Date createDate;
 	private String updateBy;
 	private Date updateDate;
+    private String serviceId;
 
 	public Integer getId() {
 		return id;
@@ -64,6 +65,14 @@ public class IgnoreUri {
 
 	public void setUpdateDate(Date updateDate) {
 		this.updateDate = updateDate;
+	}
+
+	public String getServiceId() {
+		return serviceId;
+	}
+
+	public void setServiceId(String serviceId) {
+		this.serviceId = serviceId;
 	}
 
 
