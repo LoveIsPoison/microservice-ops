@@ -25,11 +25,21 @@
 	</properties>
 
 	<dependencies>
-		<!-- <dependency>
+		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>common-elegance</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
-		</dependency> -->
+			<version>0.0.4-SNAPSHOT</version>
+            <exclusions>
+              <exclusion>
+                 <groupId>org.elasticsearch</groupId>
+                 <artifactId>elasticsearch</artifactId>
+              </exclusion>
+               <exclusion>
+                 <groupId>org.elasticsearch.client</groupId>
+                 <artifactId>transport</artifactId>
+              </exclusion> 
+            </exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -138,25 +148,28 @@
                  <groupId>org.elasticsearch</groupId>
                  <artifactId>elasticsearch</artifactId>
               </exclusion>
-<!--               <exclusion>
+               <exclusion>
                  <groupId>org.elasticsearch.plugin</groupId>
                  <artifactId>transport-netty4-client</artifactId>
-              </exclusion> -->
+              </exclusion> 
            </exclusions>
         </dependency>
         
-<!--     <dependency>
+     <dependency>
       <groupId>org.elasticsearch.plugin</groupId>
       <artifactId>transport-netty4-client</artifactId>
-      <version>5.4.1</version>
-      <scope>compile</scope>
-    </dependency> -->
+      <version>6.2.1</version>
+    </dependency> 
         <dependency>
             <groupId>org.elasticsearch.client</groupId>
             <artifactId>rest</artifactId>
             <version>6.0.0-alpha1</version>
         </dependency>
-
+<dependency>
+    <groupId>org.hibernate</groupId>
+    <artifactId>hibernate-validator</artifactId>
+    <version>5.3.0.Final</version>
+</dependency>
 	</dependencies>
 
 
