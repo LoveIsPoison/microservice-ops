@@ -10,10 +10,6 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
 	</properties>
 
 	<dependencies>
@@ -33,12 +29,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		<!-- 持久层 <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-starter-jdbc</artifactId> 
-			</dependency> <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
-			</dependency> <dependency> <groupId>tk.mybatis</groupId> <artifactId>mapper-spring-boot-starter</artifactId> 
-			<version>1.1.2</version> </dependency> <dependency> <groupId>com.github.pagehelper</groupId> 
-			<artifactId>pagehelper-spring-boot-starter</artifactId> <version>1.1.2</version> 
-			</dependency> -->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -54,13 +44,12 @@
 			<artifactId>mapper-spring-boot-starter</artifactId>
 			<version>${mapperStarter.version}</version>
 		</dependency>
-		
 			
-		<dependency>
+		<!-- <dependency>
 			<groupId>org.mybatis.spring.boot</groupId>
 			<artifactId>mybatis-spring-boot-starter</artifactId>
 			<version>1.3.1</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- 通用翻页 -->
 		<dependency>
@@ -83,15 +72,6 @@
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>ops-common</artifactId>
 		</dependency>
-		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
-			<version>5.1.30</version> </dependency> -->
-
-		<!-- Redis客户端 -->
-		<!-- <dependency> <groupId>redis.clients</groupId> <artifactId>jedis</artifactId> 
-			<version>2.9.0</version> </dependency> -->
-		<!-- redis Spring 基于注解配置 -->
-		<!-- <dependency> <groupId>org.springframework.data</groupId> <artifactId>spring-data-redis</artifactId> 
-			<version>1.7.2.RELEASE</version> </dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -101,7 +81,7 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>datasource-hikaricp-starter</artifactId>
-			<version>1.1.1</version>
+			<version>${hikaricp-starter.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -114,7 +94,7 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>ops-auth-client</artifactId>
-			<version>1.0.0</version>
+			<version>${auth-client.version}</version>
 		</dependency>
 	</dependencies>
 

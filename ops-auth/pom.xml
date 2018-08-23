@@ -10,14 +10,6 @@
 	</parent>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
-		<spring-cloud.version>Finchley.SR1</spring-cloud.version>
-		<mapperStarter.version>1.2.4</mapperStarter.version>
-		<pagehelpStarter.version>1.2.3</pagehelpStarter.version>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
 	</properties>
 
 	<artifactId>ops-auth</artifactId>
@@ -35,80 +27,18 @@
 
 	<dependencyManagement>
 		<dependencies>
-			<!-- <dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>${spring-cloud.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency> -->
 			<dependency>
 				<groupId>com.yonyou.cloud</groupId>
 				<artifactId>ops-common</artifactId>
-				<version>0.0.2-SNAPSHOT</version>
+				<version>${ops-common.version}</version>
 				<scope>provided</scope>
 			</dependency>
-			<!-- <dependency>
-				<groupId>org.springframework</groupId>
-				<artifactId>spring-webmvc</artifactId>
-				<version>4.3.9.RELEASE</version>
-				<scope>provided</scope>
-			</dependency> -->
-			<!-- <dependency>
-				<groupId>org.springframework.cloud</groupId>
-				<artifactId>spring-cloud-netflix-core</artifactId>
-				<version>1.3.1.RELEASE</version>
-				<scope>provided</scope>
-			</dependency> -->
-			<!-- <dependency>
-				<groupId>io.github.openfeign</groupId>
-				<artifactId>feign-core</artifactId>
-				<version>9.5.0</version>
-				<scope>provided</scope>
-			</dependency> -->
-			<!-- <dependency>
-				<groupId>org.projectlombok</groupId>
-				<artifactId>lombok</artifactId>
-				<version>1.16.14</version>
-				<scope>provided</scope>
-			</dependency> -->
-			<!-- <dependency>
-				<groupId>com.yonyou.cloud</groupId>
-				<artifactId>common-elegance</artifactId>
-				<version>0.0.3-SNAPSHOT</version>
-			</dependency> -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.2.33</version>
+				<version>${fastjson.version}</version>
 			</dependency>
-			<!-- 通用mapper -->
-			<!-- <dependency>
-				<groupId>tk.mybatis</groupId>
-				<artifactId>mapper-spring-boot-starter</artifactId>
-				<version>${mapperStarter.version}</version>
-			</dependency> -->
-			<!-- 通用翻页 -->
-			<!-- <dependency>
-				<groupId>com.github.pagehelper</groupId>
-				<artifactId>pagehelper-spring-boot-starter</artifactId>
-				<version>${pagehelpStarter.version}</version>
-			</dependency> -->
-
 		</dependencies>
 	</dependencyManagement>
 
-	
-	<distributionManagement>
-		<repository>
-			<id>nexus-releases</id>
-			<name>Releases name</name>
-			<url>http://10.180.8.200:32000/repository/maven-releases/</url>
-		</repository>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>snapshots name</name>
-			<url>http://10.180.8.200:32000/repository/maven-snapshots/</url>
-		</snapshotRepository>
-	</distributionManagement>
 </project>

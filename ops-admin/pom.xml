@@ -1,24 +1,24 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<artifactId>ops-admin</artifactId>
+	
 	<parent>
 		<groupId>com.yonyou.cloud</groupId>
 		<artifactId>ops</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
+	
+	<artifactId>ops-admin</artifactId>
 
 	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>1.8</java.version>
+	
 	</properties>
 	
 	<dependencies>
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>ops-common</artifactId>
-			<version>0.0.2-SNAPSHOT</version>
+			<version>${ops-common.version}</version>
 		</dependency>
 
 		<dependency>
@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>com.spring4all</groupId>
 			<artifactId>swagger-spring-boot-starter</artifactId>
-			<version>1.7.1.RELEASE</version>
+			<version>${swagger-starter.version}</version>
 		</dependency>
 
 		<!-- 通用mapper -->
@@ -97,7 +97,7 @@
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.33</version>
+			<version>${fastjson.version}</version>
 		</dependency>
 
 		<dependency>
@@ -107,13 +107,13 @@
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
-			<version>20.0</version>
+			<version>${guava.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>ops-auth-client</artifactId>
-			<version>1.0.0</version>
+			<version>${auth-client.version}</version>
 		</dependency>
 		
 		<dependency>
@@ -128,7 +128,7 @@
 		<dependency>
 			<groupId>com.yonyou.cloud</groupId>
 			<artifactId>datasource-hikaricp-starter</artifactId>
-			<version>1.1.1</version>
+			<version>${hikaricp-starter.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -157,7 +157,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 				</configuration>
-			</plugin> <!---->
+			</plugin>
 		</plugins>
 	</build>
 
