@@ -1,12 +1,12 @@
 spring:
   data:
     mongodb:
-      uri: ${mongodb.uri:mongodb://10.180.4.225:27017/test}
+      uri: ${mongodb.uri:mongodb://10.180.8.200:30000/ops}
   application:
     name: ops-mq
   rabbitmq:
-    password: ${rabbitmq.password:1}
+    password: ${rabbitmq.password:Pass1234}
     port: ${rabbitmq.port:5672}
     virtual-host: ${rabbitmq.vhost:paas_dev}
-    host: ${rabbitmq.host:121.196.193.149}
-    username: ${rabbitmq.username:paasuser}
+    host: ${rabbitmq.host:10.180.8.203}
+    username: ${rabbitmq.username:mqadmin}
