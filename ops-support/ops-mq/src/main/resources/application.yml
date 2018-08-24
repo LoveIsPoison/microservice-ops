@@ -10,3 +10,5 @@ spring:
     virtual-host: ${rabbitmq.vhost:paas_dev}
     host: ${rabbitmq.host:10.180.8.203}
     username: ${rabbitmq.username:mqadmin}
+server:
+  port: ${ops.mq.port:9003}
