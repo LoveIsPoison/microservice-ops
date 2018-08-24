@@ -1,9 +1,15 @@
-FROM 172.16.199.203/daocloud/java:latest
+FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:v0.2
 
-COPY target/ops-mq.jar /usr/src/myapp/ops-mq.jar
+RUN mkdir -p /usr/src/myapp
+
+COPY ./target/ops-mq.jar /usr/src/myapp/ops-mq.jar
+
+COPY env.sh /agent/env.sh
+
+RUN chmod -R 777 /agent
 
 WORKDIR /usr/src/myapp/
 
 EXPOSE 9003
 
-ENTRYPOINT java -jar ops-mq.jar
+CMD /agent/env.sh run
