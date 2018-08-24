@@ -7,6 +7,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import com.spring4all.swagger.EnableSwagger2Doc;
+
+import tk.mybatis.spring.annotation.MapperScan;
 /**
  * 
  * @author daniell
@@ -17,6 +19,7 @@ import com.spring4all.swagger.EnableSwagger2Doc;
 @EnableDiscoveryClient
 @EnableFeignClients
 @EnableEurekaClient
+@MapperScan("com.yonyou.cloud.ops.alert.ops.alert.mapper")
 public class AlarmApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(AlarmApplication.class, args);
