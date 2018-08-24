@@ -1,0 +1,39 @@
+spring:
+  aop:
+    proxy-target-class: true
+  datasource:
+    password: ${db.alarm.password:Pass1q2w}
+    driverClassName: com.mysql.jdbc.Driver
+    url: ${db.alarm.url:jdbc:mysql://10.180.8.203:3306/ops-alarm?useUnicode=true&amp;characterEncoding=utf8mb4} 
+    username: ${db.alarm.username:test}
+  redis:
+      cluster: 
+        nodes: 10.180.8.209:7002
+      url: 10.180.8.209
+      port: 7002
+mail:
+  server:
+    port: ${mail.port:25}
+    host: ${mail.host:smtp.163.com}
+  password: ${mailPassword:123admin}
+  fromAddress: ${mailFromAddress:yonyou_dev@163.com}
+  userName: ${mailUserName:yonyou_dev@163.com}
+  validate: ${mailValidate:true}
+pagehelper:
+  supportMethodsArguments: true
+  reasonable: true
+  helperDialect: mysql
+  params: count=countSql
+mybatis:
+  mapper-locations: classpath:mybatis/mapper/*.xml
+  type-aliases-package: com.yonyou.cloud.ops.alert.ops.alert.entity
+mapper:
+  plugin: tk.mybatis.mapper.generator.MapperPlugin
+  identity: MYSQL
+  not-empty: false
+  mappers: tk.mybatis.mapper.common.Mapper
+redis:
+  task:
+    schedule: "* 0/1 * * * ?"
+  listener:
+    key: another-ops-logs
