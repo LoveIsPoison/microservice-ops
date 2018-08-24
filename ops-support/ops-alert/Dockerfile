@@ -1,9 +1,15 @@
-FROM 172.16.199.203/daocloud/java:latest
+FROM 10.180.4.226/yonyou-dev/jdk-pinpoint:v0.2
 
-COPY target/ops-alert.jar /usr/src/myapp/ops-alert.jar
+RUN mkdir -p /usr/src/myapp
+
+COPY ./target/ops-alert.jar /usr/src/myapp/ops-alert.jar
+
+COPY env.sh /agent/env.sh
+
+RUN chmod -R 777 /agent
 
 WORKDIR /usr/src/myapp/
 
 EXPOSE 9008
 
-ENTRYPOINT java -jar ops-alert.jar
+CMD /agent/env.sh run
