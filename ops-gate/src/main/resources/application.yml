@@ -10,28 +10,13 @@ spring:
         default-property-inclusion: non_null
     redis:
       cluster: 
-        nodes: ${redis.cluster.nodes}
-        
-    #redis:
-    #    database: 1
-    #    host: ${redis.host:10.180.8.220}
-    #    pool:
-    #        max-active: 20
-    
-    
-    #rabbitmq配置
-#    rabbitmq:
-#        host: ${rabbitmq.host:10.180.4.221}
-#        port : ${rabbitmq.port:5672}
-#        username: ${rabbitmq.username:mqadmin}
-#        password: ${rabbitmq.password:Pass1234}
-#        virtual-host: ${rabbitmq.vhost:/}
-        
+        nodes: 10.180.8.209:7002 #${redis.cluster.nodes}
+       
     datasource:
        driverClassName: com.mysql.jdbc.Driver
-       url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-       username: ${db.yc_base.username:root}
-       password: ${db.yc_base.pwd:password}
+       url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+       username: ${db.yc_base.username:test}
+       password: ${db.yc_base.pwd:Pass1q2w}
     http:
       multipart:
         max-file-size: 10Mb
@@ -99,9 +84,9 @@ zuul:
 
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-    username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:password}
+    url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    username: ${db.yc_base.username:test}
+    password: ${db.yc_base.pwd:Pass1q2w}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.cloud.zuul.db.mapper
@@ -157,9 +142,9 @@ groovy:
     interval: ${groovy.interval:60}
   db:
     name: test
-    url: ${db.yc_base.url:jdbc:mysql://10.180.8.200:32033/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
-    username: ${db.yc_base.username:root}
-    password: ${db.yc_base.pwd:password}
+    url: ${db.yc_base.url:jdbc:mysql://10.180.8.203:3306/yc_base?useUnicode=true&amp;characterEncoding=utf8mb4}
+    username: ${db.yc_base.username:test}
+    password: ${db.yc_base.pwd:Pass1q2w}
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.jdbc.Driver
     basepackage: com.yonyou.microservice.filter.mapper
@@ -178,3 +163,9 @@ redis:
   timeBetweenEvictionRunsMillis: ${redis.yc_base.timeBetweenEvictionRunsMillis:30000}  
   testOnBorrow: ${redis.yc_base.testOnBorrow:true}  
   expire: ${redis.yc_base.expire:2592000} #2592000
+elasticsearch:
+  ip: 10.180.8.203
+  port: 9300
+  pool: 5
+  cluster:
+    name: es6.2

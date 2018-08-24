@@ -17,6 +17,10 @@
 		<java.version>1.8</java.version>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
+		<log4j-api.version>2.8.2</log4j-api.version>
+		<log4j-core.version>2.8.2</log4j-core.version>
+		<elasticsearch.version>5.6.4</elasticsearch.version>
+		<transport.version>5.6.4</transport.version>
 		<spring-cloud.version>Dalston.SR4</spring-cloud.version>
 	</properties>
 
@@ -124,21 +128,43 @@
  		  <version>1.7.2.RELEASE</version>      
 		</dependency>   		
 		
-		
-		<!--zipkin支持  -->
-<!-- 		<dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-sleuth-zipkin-stream</artifactId>
-        </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-stream-rabbit</artifactId>
+          <groupId>log4j</groupId>
+          <artifactId>log4j</artifactId>
+          <version>1.2.17</version>
         </dependency>
 
+         <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j-api.version}</version>
+        </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-sleuth</artifactId>
-        </dependency> -->
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j-core.version}</version>
+        </dependency> 
+        <dependency>
+           <groupId>org.elasticsearch</groupId>
+           <artifactId>elasticsearch</artifactId>
+           <version>6.2.1</version>
+        </dependency>
+        <dependency>
+           <groupId>org.elasticsearch.client</groupId>
+           <artifactId>transport</artifactId>
+           <version>6.2.1</version>
+           <exclusions>
+              <exclusion>
+                 <groupId>org.elasticsearch</groupId>
+                 <artifactId>elasticsearch</artifactId>
+              </exclusion>
+           </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.elasticsearch.client</groupId>
+            <artifactId>rest</artifactId>
+            <version>6.0.0-alpha1</version>
+        </dependency>
            		
 	</dependencies>
 
@@ -186,4 +212,25 @@
 			</plugin>
 		</plugins>
 	</build>
+		<repositories>
+		<repository>
+			<id>spring-snapshots</id>
+			<url>https://repo.spring.io/snapshot</url>
+			<snapshots><enabled>true</enabled></snapshots>
+		</repository>
+		<repository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/milestone</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>spring-snapshots</id>
+			<url>https://repo.spring.io/snapshot</url>
+		</pluginRepository>
+		<pluginRepository>
+			<id>spring-milestones</id>
+			<url>https://repo.spring.io/milestone</url>
+		</pluginRepository>
+	</pluginRepositories>
 </project>
